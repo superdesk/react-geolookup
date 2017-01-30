@@ -7,12 +7,21 @@ This component was based on a fork of the wonderful [ubilabs.github.io/react-geo
 
 ## Demo
 
-Live demo: [ubilabs.github.io/react-geolookup](http://ubilabs.github.io/react-geolookup/)
+Live demo: [superdesk.github.io/react-geolookup](http://superdesk.github.io/react-geolookup/)
 
 
 ## Installation
 
-As this component uses the Google Maps Places API to get suggests, you must include the Google Maps Places API in the `<head>` of your HTML:
+The easiest way to use geolookup is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
+
+You can also use the standalone build by including `dist/react-geolookup.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
+
+```sh
+npm install react-geolookup --save
+```
+
+#### Google Places API (default):
+By default this component uses the Google Maps Places API to get suggests.  This requires you to include the Google Maps Places API in the `<head>` of your HTML:
 
 ```html
 <!DOCTYPE html>
@@ -29,13 +38,21 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 
 Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API] (https://developers.google.com/maps/documentation/javascript/).
 
-The easiest way to use geolookup is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
+#### Open Street Maps Nominatim:
 
-You can also use the standalone build by including `dist/react-geolookup.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
+To use the Nominatim geocoding service you will need to install the [nominatim-browser]() npm package, which you can install with:
 
 ```sh
-npm install react-geolookup --save
+npm install nominatim-browser --save
 ```
+
+and import:
+
+```js
+import * as Nominatim from 'nominatim-browser';
+```
+
+Then you can use the `onSuggestsLookup`, `onGeocodeSuggest`, and `disableAuthLookup`, or `geocodeProvider` options to override the default behavior.
 
 ## Usage
 
@@ -290,7 +307,7 @@ Additional `className` to add when a suggestion item is active.
 
 #### Others
 
-All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geolookup/blob/master/src/filter-input-attributes.js#L4)
+All [allowed attributes for `input[type="text"]`](https://github.com/superdesk/react-geolookup/blob/master/src/filter-input-attributes.js#L4)
 All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).  
 All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-events) except for drag & drop.
 
@@ -310,7 +327,7 @@ It is possible to update the value of the input contained within the GeoSuggest 
 #### clear()
 It is also possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
 
-### Example
+### Google Places API Example
 
 ```jsx
 import React from 'react';
@@ -353,6 +370,60 @@ var App = React.createClass({
    */
   onSuggestSelect: function(suggest) {
     console.log(suggest);
+  }
+});
+
+ReactDOM.render(<App />, document.getElementById('app'));
+```
+
+### Nominatim Example:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Geolookup from '../../src/Geolookup';
+// IMPORTANT: nomintim-browser is only included in dev dependencies
+import * as Nominatim from 'nominatim-browser';
+
+var App = React.createClass({ 
+  render: function() {
+    return ( 
+      <div>
+        <Geolookup
+          inputClassName="geolookup__input--nominatim"
+          disableAutoLookup={true}
+          onSuggestsLookup={this.onSuggestsLookup}
+          onGeocodeSuggest={this.onGeocodeSuggest}
+          getSuggestLabel={this.getSuggestLabel}
+          radius="20" />
+      </div>
+    );
+  },
+
+  onSuggestsLookup: function(userInput) {
+    return Nominatim.geocode({
+      q: userInput,
+      addressdetails: true
+    });
+  },
+
+  onGeocodeSuggest: function(suggest) {
+    let geocoded = {};
+    if (suggest) {
+      geocoded.nominatim = suggest.raw || {};
+      geocoded.location = {
+        lat: suggest.raw ? suggest.raw.lat : '',
+        lon: suggest.raw ? suggest.raw.lon : ''
+      };
+      geocoded.placeId = suggest.placeId;
+      geocoded.isFixture = suggest.isFixture;
+      geocoded.label = suggest.raw ? suggest.raw.display_name : '';
+    }
+    return geocoded;
+  },
+  
+  getSuggestLabel: function(suggest) {
+    return suggest.display_name;
   }
 });
 

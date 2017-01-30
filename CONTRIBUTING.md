@@ -60,3 +60,9 @@ To release & deploy, run the following:
 ```
 npm run release:patch|minor|major
 ```
+
+To build and publish github.io example page:
+
+```
+npm run publish:example
+```
