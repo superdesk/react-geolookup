@@ -1,0 +1,55 @@
+<!doctype html>
+<head>
+  <title>React Geolookup</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:300,100,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="app.css">
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBG0SybP0EKWH3Jvwki7IR5AMyO_cUeeQc"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>React Geolookup</h1>
+
+    <!-- Google Places --> 
+    <h2 class="subheader">
+      Google Places Suggest for <a href="http://facebook.github.io/react/" title="React.js">React.js</a>,<br>supporting default places.
+    </h2>
+    <div id="app"></div>
+    <div class="hint">
+      Check the console when selecting a suggest!
+    </div>
+
+    <br/>
+ 
+    <!-- Open Street Maps --> 
+    <h2 class="subheader">
+      Open Street Maps Nominatim Suggests for <a href="http://facebook.github.io/react/" title="React.js">React.js</a>
+    </h2>
+    <div id="app-nominatim"></div>
+    <div class="hint">
+      Suggestions will not load until Search button is clicked.
+      Implemented using onSuggestLookup, onGeocodeSuggest, and disableAutoLookup properties.
+    </div>
+
+    <br/>
+
+    <!-- TODO: add example using geocodeProvider with Google PlacesService for lookup and geocode -->
+    <h2 class="subheader">
+      Custom Geocode Provider Suggests for <a href="http://facebook.github.io/react/" title="React.js">React.js</a>
+    </h2>
+    <div id="app-geocode-provider"></div>
+    <div class="hint">
+      Suggestions will not load until Search button is clicked.
+      Implemented using geocodeProvider property.
+    </div>
+
+    <br/>
+
+    <div class="footer">
+      <a href="https://github.com/superdesk/react-geolookup">View project on GitHub</a>. Made by <a href="http://https://www.sourcefabric.org" title="Sourcefabric"><img src="https://www.sourcefabric.org/themes/publication_2/theme_1/assets/img/logo-sourcefabric.png" alt="Sourcefabric" class="sourcefabric" width="100"></a>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="app-nominatim.js"></script>
+  <script src="app-geocode-provider.js"></script>
+</body>
