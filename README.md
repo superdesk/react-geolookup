@@ -2,7 +2,7 @@
 
 A [React](http://facebook.github.io/react/) geolocation suggest component that supports Google Maps Places API, Open Street Maps Nominatim API, or your own customized Geocoding service. You can also define your own suggests as defaults. Works with [Preact](https://github.com/developit/preact), too.
 
-This component was based on a fork of the wonderful [ubilabs.github.io/react-geolookup](http://ubilabs.github.io/react-geolookup/). 
+This component was based on a fork of the wonderful [ubilabs.github.io/react-geolookup](http://ubilabs.github.io/react-geosuggest/). 
 
 
 ## Demo
@@ -322,10 +322,10 @@ Call `focus` to focus on the element. The suggest list will be expanded with the
 Call `blur` to blur (unfocus) the element. The suggest list will be closed.
 
 #### update(value)
-It is possible to update the value of the input contained within the GeoSuggest component by calling the `update` function with a new desired `value` of the type String.
+It is possible to update the value of the input contained within the GeoLookup component by calling the `update` function with a new desired `value` of the type String.
 
 #### clear()
-It is also possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
+It is also possible to clear the value of the input contained within the GeoLookup component by calling the `clear` function.
 
 ### Google Places API Example
 
