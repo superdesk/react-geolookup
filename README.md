@@ -1,4 +1,4 @@
-# React Geolookup 
+# React Geolookup [![Build Status](https://travis-ci.org/superdesk/react-geolookup.svg?branch=master)](https://travis-ci.org/superdesk/react-geolookup)
 
 A [React](http://facebook.github.io/react/) geolocation suggest component that supports Google Maps Places API, Open Street Maps Nominatim API, or your own customized Geocoding service. You can also define your own suggests as defaults. Works with [Preact](https://github.com/developit/preact), too.
 
