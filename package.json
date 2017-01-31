@@ -1,7 +1,7 @@
 {
   "name": "react-geolookup",
   "version": "1.0.0",
-  "description": "A React autosuggest for the Google Maps Places API.",
+  "description": "A React autosuggest / lookup component that can utilize the Google Maps Places API, Open Street Maps Nominatim service, or a custom Geocoding service.",
   "main": "dist/Geolookup.js",
   "author": "Mark Lewis <mark.lewis@sourcefabric.org>",
   "homepage": "https://github.com/superdesk/react-geolookup",

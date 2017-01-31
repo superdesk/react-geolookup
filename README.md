@@ -2,7 +2,7 @@
 
 A [React](http://facebook.github.io/react/) geolocation suggest component that supports Google Maps Places API, Open Street Maps Nominatim API, or your own customized Geocoding service. You can also define your own suggests as defaults. Works with [Preact](https://github.com/developit/preact), too.
 
-This component was based on a fork of the wonderful [ubilabs.github.io/react-geosuggest](http://ubilabs.github.io/react-geosuggest/). 
+This component was based on a fork of the wonderful [ubilabs.github.io/react-geosuggest](http://ubilabs.github.io/react-geosuggest/).  This fork adds several options to allow alternate geocoding services, such as Open Street Maps Nominatim, instead of the default Google Maps Places API.
 
 
 ## Demo
