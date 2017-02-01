@@ -1103,6 +1103,7 @@ var Geolookup = function (_React$Component) {
           button = _react2.default.createElement(
         'button',
         { className: this.props.buttonClassName,
+          type: 'button',
           onClick: this.onButtonClick },
         this.props.buttonText
       ),
