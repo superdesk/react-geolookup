@@ -15,5 +15,3 @@
 #### Features
 
 * Initial release based on fork of [react-geosuggest](https://github.com/ubilabs/react-geosuggest/)
-ï¿½ï¿½5i* add type=butï¿½kbï¿½kbï¿½kb'button' to prevent search buttnoï¿½kbï¿½kbon from submitting parent form:wq:wq:w!:q!:wq:q!
-€ý5:q!
