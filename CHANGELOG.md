@@ -1,3 +1,11 @@
+### 1.0.3 (2017-04-11)
+
+
+#### Bug Fixes
+
+* **client:** removed unecessary console.error ([a9cc9bc4](https://github.com/superdesk/react-geolookup/commit/a9cc9bc4648a82503945e8fdab246f6c9672c2b5))
+
+
 ### 1.0.2 (2017-02-01)
 
 
