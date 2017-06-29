@@ -89,7 +89,7 @@ var SuggestItem = function (_React$Component) {
           onMouseDown: this.props.onMouseDown,
           onMouseOut: this.props.onMouseOut,
           onClick: this.onClick },
-        this.props.suggest.label
+        this.props.suggestItemLabelRenderer(this.props.suggest)
       );
     }
   }]);

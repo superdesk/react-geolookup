@@ -488,7 +488,8 @@ class Geolookup extends React.Component {
         onSuggestNoResults={this.onSuggestNoResults}
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
-        onSuggestSelect={this.selectSuggest}/>;
+        onSuggestSelect={this.selectSuggest}
+        suggestItemLabelRenderer={this.props.suggestItemLabelRenderer} />;
 
     return <div className={classes}>
       <span className="geolookup__input-wrapper">

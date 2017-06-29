@@ -327,33 +327,31 @@ var Geolookup = function (_React$Component) {
               console.error('geocodeProvider lookup Error: ', error);
             });
           } else {
-            (function () {
-              // Use Google Places lookup
-              var options = {
-                input: _this2.state.userInput
-              };
+            // Use Google Places lookup
+            var options = {
+              input: _this2.state.userInput
+            };
 
-              ['location', 'radius', 'bounds', 'types'].forEach(function (option) {
-                if (_this2.props[option]) {
-                  options[option] = _this2.props[option];
+            ['location', 'radius', 'bounds', 'types'].forEach(function (option) {
+              if (_this2.props[option]) {
+                options[option] = _this2.props[option];
+              }
+            });
+
+            if (_this2.props.country) {
+              options.componentRestrictions = {
+                country: _this2.props.country
+              };
+            }
+            _this2.autocompleteService.getPlacePredictions(options, function (suggestsResults) {
+              _this2.setState({ isLoading: false });
+              _this2.updateSuggests(suggestsResults || [], // can be null
+              function () {
+                if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
+                  _this2.activateSuggest('next');
                 }
               });
-
-              if (_this2.props.country) {
-                options.componentRestrictions = {
-                  country: _this2.props.country
-                };
-              }
-              _this2.autocompleteService.getPlacePredictions(options, function (suggestsResults) {
-                _this2.setState({ isLoading: false });
-                _this2.updateSuggests(suggestsResults || [], // can be null
-                function () {
-                  if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
-                    _this2.activateSuggest('next');
-                  }
-                });
-              });
-            })();
+            });
           }
         } else {
           // Use props defined onSuggestLookup
@@ -590,7 +588,8 @@ var Geolookup = function (_React$Component) {
         onSuggestNoResults: this.onSuggestNoResults,
         onSuggestMouseDown: this.onSuggestMouseDown,
         onSuggestMouseOut: this.onSuggestMouseOut,
-        onSuggestSelect: this.selectSuggest });
+        onSuggestSelect: this.selectSuggest,
+        suggestItemLabelRenderer: this.props.suggestItemLabelRenderer });
 
       return _react2.default.createElement(
         'div',

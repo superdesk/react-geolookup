@@ -64,7 +64,8 @@ export default class SuggestList extends React.Component {
           activeClassname={this.props.suggestItemActiveClassName}
           onMouseDown={this.props.onSuggestMouseDown}
           onMouseOut={this.props.onSuggestMouseOut}
-          onSelect={this.props.onSuggestSelect} />;
+          onSelect={this.props.onSuggestSelect}
+          suggestItemLabelRenderer={this.props.suggestItemLabelRenderer} />;
       })}
     </ul>;
   }

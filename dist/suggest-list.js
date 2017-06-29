@@ -112,7 +112,8 @@ var SuggestList = function (_React$Component) {
             activeClassname: _this2.props.suggestItemActiveClassName,
             onMouseDown: _this2.props.onSuggestMouseDown,
             onMouseOut: _this2.props.onSuggestMouseOut,
-            onSelect: _this2.props.onSuggestSelect });
+            onSelect: _this2.props.onSuggestSelect,
+            suggestItemLabelRenderer: _this2.props.suggestItemLabelRenderer });
         })
       );
     }
