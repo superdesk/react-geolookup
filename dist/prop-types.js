@@ -51,5 +51,6 @@ exports.default = {
     suggestItem: _react2.default.PropTypes.object
   }),
   ignoreTab: _react2.default.PropTypes.bool,
-  label: _react2.default.PropTypes.string
+  label: _react2.default.PropTypes.string,
+  suggestItemLabelRenderer: _react2.default.PropTypes.func
 };

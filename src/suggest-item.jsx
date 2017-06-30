@@ -45,7 +45,7 @@ export default class SuggestItem extends React.Component {
       onMouseDown={this.props.onMouseDown}
       onMouseOut={this.props.onMouseOut}
       onClick={this.onClick}>
-        {this.props.suggest.label}
+        {this.props.suggestItemLabelRenderer(this.props.suggest)}
     </li>;
   }
 }

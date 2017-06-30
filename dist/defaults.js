@@ -45,5 +45,8 @@ exports.default = {
     'suggests': {},
     'suggestItem': {}
   },
-  ignoreTab: false
+  ignoreTab: false,
+  suggestItemLabelRenderer: function suggestItemLabelRenderer(suggest) {
+    return suggest.label;
+  }
 };
