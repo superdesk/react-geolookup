@@ -1,3 +1,6 @@
+## 1.1.0 (2017-06-30)
+Adds a new `suggestItemLabelRenderer` prop to allow to customize item labels
+
 ### 1.0.3 (2017-04-11)
 
 
