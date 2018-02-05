@@ -51,11 +51,9 @@
 },{}],2:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  * 
@@ -499,12 +497,10 @@ module.exports = debounce;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],4:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -1454,7 +1450,7 @@ Input.defaultProps = {
 exports.default = Input;
 
 },{"./filter-input-attributes":7,"classnames":1,"react/lib/shallowCompare":4}],9:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1470,45 +1466,45 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Default values
  */
 exports.default = {
-  fixtures: _react2.default.PropTypes.array,
-  initialValue: _react2.default.PropTypes.string,
-  placeholder: _react2.default.PropTypes.string,
-  disabled: _react2.default.PropTypes.bool,
-  className: _react2.default.PropTypes.string,
-  inputClassName: _react2.default.PropTypes.string,
-  suggestsHiddenClassName: _react2.default.PropTypes.string,
-  suggestItemActiveClassName: _react2.default.PropTypes.string,
-  buttonClassName: _react2.default.PropTypes.string,
-  buttonText: _react2.default.PropTypes.string,
-  location: _react2.default.PropTypes.object,
-  radius: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number]),
-  bounds: _react2.default.PropTypes.object,
-  country: _react2.default.PropTypes.string,
-  types: _react2.default.PropTypes.array,
-  queryDelay: _react2.default.PropTypes.number,
-  googleMaps: _react2.default.PropTypes.object,
-  geocodeProvider: _react2.default.PropTypes.object,
-  onGeocodeSuggest: _react2.default.PropTypes.func,
-  onSuggestsLookup: _react2.default.PropTypes.func,
-  onSuggestSelect: _react2.default.PropTypes.func,
-  onSuggestResults: _react2.default.PropTypes.func,
-  onFocus: _react2.default.PropTypes.func,
-  onBlur: _react2.default.PropTypes.func,
-  onChange: _react2.default.PropTypes.func,
-  onKeyPress: _react2.default.PropTypes.func,
-  skipSuggest: _react2.default.PropTypes.func,
-  showSuggests: _react2.default.PropTypes.func,
-  disableAutoLookup: _react2.default.PropTypes.bool,
-  getSuggestLabel: _react2.default.PropTypes.func,
-  autoActivateFirstSuggest: _react2.default.PropTypes.bool,
-  style: _react2.default.PropTypes.shape({
-    input: _react2.default.PropTypes.object,
-    suggests: _react2.default.PropTypes.object,
-    suggestItem: _react2.default.PropTypes.object
+  fixtures: PropTypes.array,
+  initialValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  inputClassName: PropTypes.string,
+  suggestsHiddenClassName: PropTypes.string,
+  suggestItemActiveClassName: PropTypes.string,
+  buttonClassName: PropTypes.string,
+  buttonText: PropTypes.string,
+  location: PropTypes.object,
+  radius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  bounds: PropTypes.object,
+  country: PropTypes.string,
+  types: PropTypes.array,
+  queryDelay: PropTypes.number,
+  googleMaps: PropTypes.object,
+  geocodeProvider: PropTypes.object,
+  onGeocodeSuggest: PropTypes.func,
+  onSuggestsLookup: PropTypes.func,
+  onSuggestSelect: PropTypes.func,
+  onSuggestResults: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onKeyPress: PropTypes.func,
+  skipSuggest: PropTypes.func,
+  showSuggests: PropTypes.func,
+  disableAutoLookup: PropTypes.bool,
+  getSuggestLabel: PropTypes.func,
+  autoActivateFirstSuggest: PropTypes.bool,
+  style: PropTypes.shape({
+    input: PropTypes.object,
+    suggests: PropTypes.object,
+    suggestItem: PropTypes.object
   }),
-  ignoreTab: _react2.default.PropTypes.bool,
-  label: _react2.default.PropTypes.string,
-  suggestItemLabelRenderer: _react2.default.PropTypes.func
+  ignoreTab: PropTypes.bool,
+  label: PropTypes.string,
+  suggestItemLabelRenderer: PropTypes.func
 };
 
 },{}],10:[function(require,module,exports){
