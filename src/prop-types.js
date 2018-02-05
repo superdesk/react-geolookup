@@ -1,49 +1,46 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Default values
  */
 export default {
-  fixtures: React.PropTypes.array,
-  initialValue: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  inputClassName: React.PropTypes.string,
-  suggestsHiddenClassName: React.PropTypes.string,
-  suggestItemActiveClassName: React.PropTypes.string,
-  buttonClassName: React.PropTypes.string,
-  buttonText: React.PropTypes.string,
-  location: React.PropTypes.object,
-  radius: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number
-  ]),
-  bounds: React.PropTypes.object,
-  country: React.PropTypes.string,
-  types: React.PropTypes.array,
-  queryDelay: React.PropTypes.number,
-  googleMaps: React.PropTypes.object,
-  geocodeProvider: React.PropTypes.object,
-  onGeocodeSuggest: React.PropTypes.func,
-  onSuggestsLookup: React.PropTypes.func,
-  onSuggestSelect: React.PropTypes.func,
-  onSuggestResults: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onKeyPress: React.PropTypes.func,
-  skipSuggest: React.PropTypes.func,
-  showSuggests: React.PropTypes.func,
-  disableAutoLookup: React.PropTypes.bool,
-  getSuggestLabel: React.PropTypes.func,
-  autoActivateFirstSuggest: React.PropTypes.bool,
-  style: React.PropTypes.shape({
-    input: React.PropTypes.object,
-    suggests: React.PropTypes.object,
-    suggestItem: React.PropTypes.object
+  fixtures: PropTypes.array,
+  initialValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  inputClassName: PropTypes.string,
+  suggestsHiddenClassName: PropTypes.string,
+  suggestItemActiveClassName: PropTypes.string,
+  buttonClassName: PropTypes.string,
+  buttonText: PropTypes.string,
+  location: PropTypes.object,
+  radius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  bounds: PropTypes.object,
+  country: PropTypes.string,
+  types: PropTypes.array,
+  queryDelay: PropTypes.number,
+  googleMaps: PropTypes.object,
+  geocodeProvider: PropTypes.object,
+  onGeocodeSuggest: PropTypes.func,
+  onSuggestsLookup: PropTypes.func,
+  onSuggestSelect: PropTypes.func,
+  onSuggestResults: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onKeyPress: PropTypes.func,
+  skipSuggest: PropTypes.func,
+  showSuggests: PropTypes.func,
+  disableAutoLookup: PropTypes.bool,
+  getSuggestLabel: PropTypes.func,
+  autoActivateFirstSuggest: PropTypes.bool,
+  style: PropTypes.shape({
+    input: PropTypes.object,
+    suggests: PropTypes.object,
+    suggestItem: PropTypes.object
   }),
-  ignoreTab: React.PropTypes.bool,
-  label: React.PropTypes.string,
-  suggestItemLabelRenderer: React.PropTypes.func
+  ignoreTab: PropTypes.bool,
+  label: PropTypes.string,
+  suggestItemLabelRenderer: PropTypes.func
 };
