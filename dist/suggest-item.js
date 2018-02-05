@@ -10,9 +10,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _shallowCompare = require('react/lib/shallowCompare');
+var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
 
-var _shallowCompare2 = _interopRequireDefault(_shallowCompare);
+var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
 
 var _classnames2 = require('classnames');
 
@@ -63,7 +63,7 @@ var SuggestItem = function (_React$Component) {
      * @return {Boolean} Update or not?
      */
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _shallowCompare2.default)(this, nextProps, nextState);
+      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
     }
 
     /**
@@ -84,11 +84,13 @@ var SuggestItem = function (_React$Component) {
 
       return _react2.default.createElement(
         'li',
-        { className: classes,
+        {
+          className: classes,
           style: this.props.style,
           onMouseDown: this.props.onMouseDown,
           onMouseOut: this.props.onMouseOut,
-          onClick: this.onClick },
+          onClick: this.onClick
+        },
         this.props.suggestItemLabelRenderer(this.props.suggest)
       );
     }

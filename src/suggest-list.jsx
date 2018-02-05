@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
 
@@ -47,27 +47,37 @@ export default class SuggestList extends React.Component {
     const classes = classnames(
       'geolookup__suggests',
       {'geolookup__suggests--hidden': this.isHidden()},
-      {[this.props.hiddenClassName]: this.props.hiddenClassName ?
-        this.isHidden() : null}
+      {
+        [this.props.hiddenClassName]: this.props.hiddenClassName
+          ? this.isHidden()
+          : null
+      }
     );
 
-    return <ul className={classes} style={this.props.style}>
-      {this.props.suggests.map(suggest => {
-        const isActive = this.props.activeSuggest &&
-          suggest.placeId === this.props.activeSuggest.placeId;
+    return (
+      <ul className={classes} style={this.props.style}>
+        {this.props.suggests.map(suggest => {
+          const isActive =
+            this.props.activeSuggest &&
+            suggest.placeId === this.props.activeSuggest.placeId;
 
-        return <SuggestItem key={suggest.placeId}
-          className={suggest.className}
-          suggest={suggest}
-          style={this.props.suggestItemStyle}
-          isActive={isActive}
-          activeClassname={this.props.suggestItemActiveClassName}
-          onMouseDown={this.props.onSuggestMouseDown}
-          onMouseOut={this.props.onSuggestMouseOut}
-          onSelect={this.props.onSuggestSelect}
-          suggestItemLabelRenderer={this.props.suggestItemLabelRenderer} />;
-      })}
-    </ul>;
+          return (
+            <SuggestItem
+              key={suggest.placeId}
+              className={suggest.className}
+              suggest={suggest}
+              style={this.props.suggestItemStyle}
+              isActive={isActive}
+              activeClassname={this.props.suggestItemActiveClassName}
+              onMouseDown={this.props.onSuggestMouseDown}
+              onMouseOut={this.props.onSuggestMouseOut}
+              onSelect={this.props.onSuggestSelect}
+              suggestItemLabelRenderer={this.props.suggestItemLabelRenderer}
+            />
+          );
+        })}
+      </ul>
+    );
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
@@ -25,21 +25,21 @@ class Input extends React.Component {
    */
   onChange = () => {
     this.props.onChange(this.refs.input.value);
-  }
+  };
 
   /**
    * When the input got focused
    */
   onFocus = () => {
     this.props.onFocus();
-  }
+  };
 
   /**
    * When the input loses focus
    */
   onBlur = () => {
     this.props.onBlur();
-  }
+  };
 
   /**
    * When a key gets pressed in the input
@@ -47,13 +47,14 @@ class Input extends React.Component {
    */
   onKeyPress = event => {
     this.props.onKeyPress(event);
-  }
+  };
 
   /**
    * When a key gets pressed in the input
    * @param  {Event} event The keydown event
    */
-  onInputKeyDown = event => { // eslint-disable-line complexity
+  onInputKeyDown = event => {
+    // eslint-disable-line complexity
     switch (event.which) {
       case 40: // DOWN
         event.preventDefault();
@@ -82,7 +83,7 @@ class Input extends React.Component {
       default:
         break;
     }
-  }
+  };
 
   /**
    * Focus the input
@@ -104,23 +105,24 @@ class Input extends React.Component {
    */
   render() {
     const attributes = filterInputAttributes(this.props),
-      classes = classnames(
-        'geolookup__input',
-        this.props.className
-      );
+      classes = classnames('geolookup__input', this.props.className);
 
-    return <input className={classes}
-      ref='input'
-      type='text'
-      autoComplete='off'
-      {...attributes}
-      value={this.props.value}
-      style={this.props.style}
-      onKeyDown={this.onInputKeyDown}
-      onChange={this.onChange}
-      onKeyPress={this.onKeyPress}
-      onFocus={this.onFocus}
-      onBlur={this.onBlur} />;
+    return (
+      <input
+        className={classes}
+        ref="input"
+        type="text"
+        autoComplete="off"
+        {...attributes}
+        value={this.props.value}
+        style={this.props.style}
+        onKeyDown={this.onInputKeyDown}
+        onChange={this.onChange}
+        onKeyPress={this.onKeyPress}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      />
+    );
   }
 }
 
