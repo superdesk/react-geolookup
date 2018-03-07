@@ -12,9 +12,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _shallowCompare = require('react/lib/shallowCompare');
+var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
 
-var _shallowCompare2 = _interopRequireDefault(_shallowCompare);
+var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
 
 var _classnames = require('classnames');
 
@@ -108,7 +108,7 @@ var Input = function (_React$Component) {
      * @return {Boolean} Update or not?
      */
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _shallowCompare2.default)(this, nextProps, nextState);
+      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
     }
 
     /**
@@ -169,7 +169,8 @@ var Input = function (_React$Component) {
       var attributes = (0, _filterInputAttributes2.default)(this.props),
           classes = (0, _classnames2.default)('geolookup__input', this.props.className);
 
-      return _react2.default.createElement('input', _extends({ className: classes,
+      return _react2.default.createElement('input', _extends({
+        className: classes,
         ref: 'input',
         type: 'text',
         autoComplete: 'off'
@@ -180,7 +181,8 @@ var Input = function (_React$Component) {
         onChange: this.onChange,
         onKeyPress: this.onKeyPress,
         onFocus: this.onFocus,
-        onBlur: this.onBlur }));
+        onBlur: this.onBlur
+      }));
     }
   }]);
 

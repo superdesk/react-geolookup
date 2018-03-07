@@ -1,5 +1,5 @@
 import React from 'react';
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 /**
@@ -25,7 +25,7 @@ export default class SuggestItem extends React.Component {
   onClick = event => {
     event.preventDefault();
     this.props.onSelect(this.props.suggest);
-  }
+  };
 
   /**
    * Render the view
@@ -36,17 +36,24 @@ export default class SuggestItem extends React.Component {
       'geolookup__item',
       this.props.className,
       {'geolookup__item--active': this.props.isActive},
-      {[this.props.activeClassname]: this.props.activeClassname ?
-        this.props.isActive : null}
+      {
+        [this.props.activeClassname]: this.props.activeClassname
+          ? this.props.isActive
+          : null
+      }
     );
 
-    return <li className={classes}
-      style={this.props.style}
-      onMouseDown={this.props.onMouseDown}
-      onMouseOut={this.props.onMouseOut}
-      onClick={this.onClick}>
+    return (
+      <li
+        className={classes}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onMouseOut={this.props.onMouseOut}
+        onClick={this.onClick}
+      >
         {this.props.suggestItemLabelRenderer(this.props.suggest)}
-    </li>;
+      </li>
+    );
   }
 }
 

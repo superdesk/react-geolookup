@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require('react');
+var _propTypes = require('prop-types');
 
-var _react2 = _interopRequireDefault(_react);
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14,43 +14,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Default values
  */
 exports.default = {
-  fixtures: _react2.default.PropTypes.array,
-  initialValue: _react2.default.PropTypes.string,
-  placeholder: _react2.default.PropTypes.string,
-  disabled: _react2.default.PropTypes.bool,
-  className: _react2.default.PropTypes.string,
-  inputClassName: _react2.default.PropTypes.string,
-  suggestsHiddenClassName: _react2.default.PropTypes.string,
-  suggestItemActiveClassName: _react2.default.PropTypes.string,
-  buttonClassName: _react2.default.PropTypes.string,
-  buttonText: _react2.default.PropTypes.string,
-  location: _react2.default.PropTypes.object,
-  radius: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number]),
-  bounds: _react2.default.PropTypes.object,
-  country: _react2.default.PropTypes.string,
-  types: _react2.default.PropTypes.array,
-  queryDelay: _react2.default.PropTypes.number,
-  googleMaps: _react2.default.PropTypes.object,
-  geocodeProvider: _react2.default.PropTypes.object,
-  onGeocodeSuggest: _react2.default.PropTypes.func,
-  onSuggestsLookup: _react2.default.PropTypes.func,
-  onSuggestSelect: _react2.default.PropTypes.func,
-  onSuggestResults: _react2.default.PropTypes.func,
-  onFocus: _react2.default.PropTypes.func,
-  onBlur: _react2.default.PropTypes.func,
-  onChange: _react2.default.PropTypes.func,
-  onKeyPress: _react2.default.PropTypes.func,
-  skipSuggest: _react2.default.PropTypes.func,
-  showSuggests: _react2.default.PropTypes.func,
-  disableAutoLookup: _react2.default.PropTypes.bool,
-  getSuggestLabel: _react2.default.PropTypes.func,
-  autoActivateFirstSuggest: _react2.default.PropTypes.bool,
-  style: _react2.default.PropTypes.shape({
-    input: _react2.default.PropTypes.object,
-    suggests: _react2.default.PropTypes.object,
-    suggestItem: _react2.default.PropTypes.object
+  fixtures: _propTypes2.default.array,
+  initialValue: _propTypes2.default.string,
+  placeholder: _propTypes2.default.string,
+  disabled: _propTypes2.default.bool,
+  className: _propTypes2.default.string,
+  inputClassName: _propTypes2.default.string,
+  suggestsHiddenClassName: _propTypes2.default.string,
+  suggestItemActiveClassName: _propTypes2.default.string,
+  buttonClassName: _propTypes2.default.string,
+  buttonText: _propTypes2.default.string,
+  location: _propTypes2.default.object,
+  radius: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+  bounds: _propTypes2.default.object,
+  country: _propTypes2.default.string,
+  types: _propTypes2.default.array,
+  queryDelay: _propTypes2.default.number,
+  googleMaps: _propTypes2.default.object,
+  geocodeProvider: _propTypes2.default.object,
+  onGeocodeSuggest: _propTypes2.default.func,
+  onSuggestsLookup: _propTypes2.default.func,
+  onSuggestSelect: _propTypes2.default.func,
+  onSuggestResults: _propTypes2.default.func,
+  onFocus: _propTypes2.default.func,
+  onBlur: _propTypes2.default.func,
+  onChange: _propTypes2.default.func,
+  onKeyPress: _propTypes2.default.func,
+  skipSuggest: _propTypes2.default.func,
+  showSuggests: _propTypes2.default.func,
+  disableAutoLookup: _propTypes2.default.bool,
+  getSuggestLabel: _propTypes2.default.func,
+  autoActivateFirstSuggest: _propTypes2.default.bool,
+  style: _propTypes2.default.shape({
+    input: _propTypes2.default.object,
+    suggests: _propTypes2.default.object,
+    suggestItem: _propTypes2.default.object
   }),
-  ignoreTab: _react2.default.PropTypes.bool,
-  label: _react2.default.PropTypes.string,
-  suggestItemLabelRenderer: _react2.default.PropTypes.func
+  ignoreTab: _propTypes2.default.bool,
+  label: _propTypes2.default.string,
+  suggestItemLabelRenderer: _propTypes2.default.func
 };
