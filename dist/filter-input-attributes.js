@@ -1,19 +1,19 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 exports.default = function (props) {
-  var attributes = {};
+    var attributes = {};
 
-  allowedAttributes.forEach(function (allowedAttribute) {
-    if (props[allowedAttribute]) {
-      attributes[allowedAttribute] = props[allowedAttribute];
-    }
-  });
+    allowedAttributes.forEach(function (allowedAttribute) {
+        if (props[allowedAttribute]) {
+            attributes[allowedAttribute] = props[allowedAttribute];
+        }
+    });
 
-  return attributes;
+    return attributes;
 };
 
 /**

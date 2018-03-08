@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10,13 +10,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
-
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
-
 var _classnames2 = require('classnames');
 
 var _classnames3 = _interopRequireDefault(_classnames2);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,81 +33,87 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-var SuggestItem = function (_React$Component) {
-  _inherits(SuggestItem, _React$Component);
+var SuggestItem = function (_React$PureComponent) {
+    _inherits(SuggestItem, _React$PureComponent);
 
-  function SuggestItem() {
-    var _ref;
+    function SuggestItem(props) {
+        _classCallCheck(this, SuggestItem);
 
-    var _temp, _this, _ret;
+        var _this = _possibleConstructorReturn(this, (SuggestItem.__proto__ || Object.getPrototypeOf(SuggestItem)).call(this, props));
 
-    _classCallCheck(this, SuggestItem);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SuggestItem.__proto__ || Object.getPrototypeOf(SuggestItem)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (event) {
-      event.preventDefault();
-      _this.props.onSelect(_this.props.suggest);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(SuggestItem, [{
-    key: 'shouldComponentUpdate',
-
-    /**
-     * Whether or not the component should update
-     * @param {Object} nextProps The new properties
-     * @param {Object} nextState The new state
-     * @return {Boolean} Update or not?
-     */
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+        _this.onClick = _this.onClick.bind(_this);
+        return _this;
     }
 
     /**
-     * When the suggest item got clicked
-     * @param {Event} event The click event
-     */
-
-  }, {
-    key: 'render',
+    * When the suggest item got clicked
+    * @param {Event} event The click event
+    */
 
 
-    /**
-     * Render the view
-     * @return {Function} The React element to render
-     */
-    value: function render() {
-      var classes = (0, _classnames3.default)('geolookup__item', this.props.className, { 'geolookup__item--active': this.props.isActive }, _defineProperty({}, this.props.activeClassname, this.props.activeClassname ? this.props.isActive : null));
+    _createClass(SuggestItem, [{
+        key: 'onClick',
+        value: function onClick(event) {
+            event.preventDefault();
+            this.props.onSelect(this.props.suggest);
+        }
 
-      return _react2.default.createElement(
-        'li',
-        {
-          className: classes,
-          style: this.props.style,
-          onMouseDown: this.props.onMouseDown,
-          onMouseOut: this.props.onMouseOut,
-          onClick: this.onClick
-        },
-        this.props.suggestItemLabelRenderer(this.props.suggest)
-      );
-    }
-  }]);
+        /**
+        * Render the view
+        * @return {Function} The React element to render
+        */
 
-  return SuggestItem;
-}(_react2.default.Component);
+    }, {
+        key: 'render',
+        value: function render() {
+            var classes = (0, _classnames3.default)('geolookup__item', this.props.className, { 'geolookup__item--active': this.props.isActive }, _defineProperty({}, this.props.activeClassname, this.props.activeClassname ? this.props.isActive : null));
+
+            return _react2.default.createElement(
+                'li',
+                {
+                    className: classes,
+                    style: this.props.style,
+                    onMouseDown: this.props.onMouseDown,
+                    onMouseOut: this.props.onMouseOut,
+                    onClick: this.onClick
+                },
+                this.props.suggestItemLabelRenderer(this.props.suggest)
+            );
+        }
+    }]);
+
+    return SuggestItem;
+}(_react2.default.PureComponent);
 
 /**
- * Default values for the properties
+ * Types for the properties
  * @type {Object}
  */
 
 
 exports.default = SuggestItem;
+SuggestItem.propTypes = {
+    isActive: _propTypes2.default.bool,
+    className: _propTypes2.default.string,
+    activeClassname: _propTypes2.default.string,
+    suggest: _propTypes2.default.object,
+    onMouseDown: _propTypes2.default.func,
+    onMouseOut: _propTypes2.default.func,
+    onSelect: _propTypes2.default.func,
+    suggestItemLabelRenderer: _propTypes2.default.func,
+    style: _propTypes2.default.object
+};
+
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
 SuggestItem.defaultProps = {
-  isActive: false,
-  className: '',
-  suggest: {}
+    isActive: false,
+    className: '',
+    suggest: {},
+    onMouseDown: function onMouseDown() {/* no-op */},
+    onMouseOut: function onMouseOut() {/* no-op */},
+    onSelect: function onSelect() {/* no-op */},
+    suggestItemLabelRenderer: function suggestItemLabelRenderer() {/* no-op */}
 };
