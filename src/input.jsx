@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
 import PropTypes from 'prop-types';
+import shallowCompare from 'react-addons-shallow-compare';
 
 /**
  * The input field

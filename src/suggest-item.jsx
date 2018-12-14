@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import shallowCompare from 'react-addons-shallow-compare';
 
 /**
  * A single Geolookup item in the list

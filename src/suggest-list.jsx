@@ -2,6 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
 import PropTypes from 'prop-types';
+import shallowCompare from 'react-addons-shallow-compare';
 
 /**
  * The list with suggestions. Either from an API or provided as fixture
