@@ -36,8 +36,8 @@ export default {
     style: {
         input: {},
         suggests: {},
-        suggestItem: {}
+        suggestItem: {},
     },
     ignoreTab: false,
-    suggestItemLabelRenderer: (suggest) => suggest.label
+    suggestItemLabelRenderer: (suggest) => suggest.label,
 };

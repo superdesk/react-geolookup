@@ -34,7 +34,7 @@ export default class SuggestItem extends React.PureComponent {
             {
                 [this.props.activeClassname]: this.props.activeClassname
                     ? this.props.isActive
-                    : null
+                    : null,
             }
         );
 
@@ -65,7 +65,7 @@ SuggestItem.propTypes = {
     onMouseOut: PropTypes.func,
     onSelect: PropTypes.func,
     suggestItemLabelRenderer: PropTypes.func,
-    style: PropTypes.object
+    style: PropTypes.object,
 };
 
 /**
@@ -79,5 +79,5 @@ SuggestItem.defaultProps = {
     onMouseDown: () => { /* no-op */ },
     onMouseOut: () => { /* no-op */ },
     onSelect: () => { /* no-op */ },
-    suggestItemLabelRenderer: () => { /* no-op */ }
+    suggestItemLabelRenderer: () => { /* no-op */ },
 };

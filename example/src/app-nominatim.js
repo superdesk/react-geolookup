@@ -14,7 +14,7 @@ class App extends React.Component { // eslint-disable-line
         var fixtures = [
             {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
             {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
-            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
+            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}},
         ];
 
     return ( // eslint-disable-line
@@ -45,7 +45,7 @@ class App extends React.Component { // eslint-disable-line
     onSuggestsLookup(userInput) {
         return Nominatim.geocode({
             q: userInput,
-            addressdetails: true
+            addressdetails: true,
         });
     }
 
@@ -61,7 +61,7 @@ class App extends React.Component { // eslint-disable-line
             geocoded.nominatim = suggest.raw || {};
             geocoded.location = {
                 lat: suggest.raw ? suggest.raw.lat : '',
-                lon: suggest.raw ? suggest.raw.lon : ''
+                lon: suggest.raw ? suggest.raw.lon : '',
             };
             geocoded.placeId = suggest.placeId;
             geocoded.isFixture = suggest.isFixture;

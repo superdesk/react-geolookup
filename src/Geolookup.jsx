@@ -31,7 +31,7 @@ class Geolookup extends React.Component {
             isLoading: false,
             userInput: props.initialValue,
             activeSuggest: null,
-            suggests: []
+            suggests: [],
         };
 
         this.onInputChange = this.onInputChange.bind(this);
@@ -248,7 +248,7 @@ class Geolookup extends React.Component {
                 } else {
                     // Use Google Places lookup
                     const options = {
-                        input: this.state.userInput
+                        input: this.state.userInput,
                     };
 
                     ['location', 'radius', 'bounds', 'types'].forEach((option) => {
@@ -259,7 +259,7 @@ class Geolookup extends React.Component {
 
                     if (this.props.country) {
                         options.componentRestrictions = {
-                            country: this.props.country
+                            country: this.props.country,
                         };
                     }
                     this.autocompleteService.getPlacePredictions(
@@ -331,7 +331,7 @@ class Geolookup extends React.Component {
                     label: this.props.getSuggestLabel(suggest),
                     placeId: suggest.place_id,
                     raw: suggest,
-                    isFixture: false
+                    isFixture: false,
                 });
             }
         });
@@ -377,7 +377,7 @@ class Geolookup extends React.Component {
         this.timer = setTimeout(() => {
             this.setState({
                 isSuggestsHidden: true,
-                activeSuggest: null
+                activeSuggest: null,
             });
         }, 100);
     }
@@ -425,13 +425,13 @@ class Geolookup extends React.Component {
         if (!suggest) {
             // eslint-disable-next-line no-param-reassign
             suggest = {
-                label: this.state.userInput
+                label: this.state.userInput,
             };
         }
 
         this.setState({
             isSuggestsHidden: true,
-            userInput: suggest.label
+            userInput: suggest.label,
         });
 
         if (suggest.location) {
@@ -468,7 +468,7 @@ class Geolookup extends React.Component {
                             suggest.gmaps = gmaps;
                             suggest.location = {
                                 lat: location.lat(),
-                                lng: location.lng()
+                                lng: location.lng(),
                             };
                         }
                         this.props.onSuggestSelect(suggest);

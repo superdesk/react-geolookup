@@ -6,30 +6,30 @@ export default function predictions() {
             matched_substrings: [
                 {
                     length: 2,
-                    offset: 0
-                }
+                    offset: 0,
+                },
             ],
             place_id: 'ChIJOwg_06VPwokRYv534QaPC8g',
             reference: '...',
             terms: [
                 {
                     offset: 0,
-                    value: 'New York'
+                    value: 'New York',
                 },
                 {
                     offset: 10,
-                    value: 'NY'
+                    value: 'NY',
                 },
                 {
                     offset: 14,
-                    value: 'United States'
-                }
+                    value: 'United States',
+                },
             ],
             types: [
                 'locality',
                 'political',
-                'geocode'
-            ]
+                'geocode',
+            ],
         },
         {
             description: 'New York, IA, United States',
@@ -37,30 +37,30 @@ export default function predictions() {
             matched_substrings: [
                 {
                     length: 2,
-                    offset: 0
-                }
+                    offset: 0,
+                },
             ],
             place_id: 'ChIJD_qB3F8X6YcRDraFbXmLUD4',
             reference: '...',
             terms: [
                 {
                     offset: 0,
-                    value: 'New York'
+                    value: 'New York',
                 },
                 {
                     offset: 10,
-                    value: 'IA'
+                    value: 'IA',
                 },
                 {
                     offset: 14,
-                    value: 'United States'
-                }
+                    value: 'United States',
+                },
             ],
             types: [
                 'locality',
                 'political',
-                'geocode'
-            ]
+                'geocode',
+            ],
         },
         {
             description: 'New York, United States',
@@ -68,26 +68,26 @@ export default function predictions() {
             matched_substrings: [
                 {
                     length: 2,
-                    offset: 0
-                }
+                    offset: 0,
+                },
             ],
             place_id: 'ChIJqaUj8fBLzEwRZ5UY3sHGz90',
             reference: '...',
             terms: [
                 {
                     offset: 0,
-                    value: 'New York'
+                    value: 'New York',
                 },
                 {
                     offset: 10,
-                    value: 'United States'
-                }
+                    value: 'United States',
+                },
             ],
             types: [
                 'administrative_area_level_1',
                 'political',
-                'geocode'
-            ]
+                'geocode',
+            ],
         },
         {
             description: 'New Jersey, United States',
@@ -95,26 +95,26 @@ export default function predictions() {
             matched_substrings: [
                 {
                     length: 2,
-                    offset: 0
-                }
+                    offset: 0,
+                },
             ],
             place_id: 'ChIJn0AAnpX7wIkRjW0_-Ad70iw',
             reference: '...',
             terms: [
                 {
                     offset: 0,
-                    value: 'New Jersey'
+                    value: 'New Jersey',
                 },
                 {
                     offset: 12,
-                    value: 'United States'
-                }
+                    value: 'United States',
+                },
             ],
             types: [
                 'administrative_area_level_1',
                 'political',
-                'geocode'
-            ]
+                'geocode',
+            ],
         },
         {
             description: 'Newark, NJ, United States',
@@ -122,30 +122,30 @@ export default function predictions() {
             matched_substrings: [
                 {
                     length: 2,
-                    offset: 0
-                }
+                    offset: 0,
+                },
             ],
             place_id: 'ChIJHQ6aMnBTwokRc-T-3CrcvOE',
             reference: '...',
             terms: [
                 {
                     offset: 0,
-                    value: 'Newark'
+                    value: 'Newark',
                 },
                 {
                     offset: 8,
-                    value: 'NJ'
+                    value: 'NJ',
                 },
                 {
                     offset: 12,
-                    value: 'United States'
-                }
+                    value: 'United States',
+                },
             ],
             types: [
                 'locality',
                 'political',
-                'geocode'
-            ]
-        }
+                'geocode',
+            ],
+        },
     ];
 }
