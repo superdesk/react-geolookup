@@ -14,7 +14,7 @@
     "url": "https://github.com/ubilabs/react-geolookup/issues"
   },
   "peerDependencies": {
-    "react": "^16.2.0"
+    "react": "16.8.6"
   },
   "dependencies": {
     "classnames": "^2.2.3",
@@ -41,11 +41,11 @@
     "nominatim-browser": "^2.0.2",
     "nyc": "^6.4.4",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "sinon": "^4.4.2",
     "superdesk-code-style": "^1.0.0",
-    "uglify-js": "^3.3.13"
+    "uglify-js": "~3.3.13"
   },
   "scripts": {
     "prepublish": "npm run build:dist",

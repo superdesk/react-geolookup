@@ -1,6 +1,6 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geolookup = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geolookup = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /*!
-  Copyright (c) 2016 Jed Watson.
+  Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
@@ -22,8 +22,11 @@
 
 			if (argType === 'string' || argType === 'number') {
 				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
 			} else if (argType === 'object') {
 				for (var key in arg) {
 					if (hasOwn.call(arg, key) && arg[key]) {
@@ -37,6 +40,7 @@
 	}
 
 	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
 		module.exports = classNames;
 	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		// register as 'classnames', consistent with npm package name
@@ -49,230 +53,6 @@
 }());
 
 },{}],2:[function(require,module,exports){
-"use strict";
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-},{}],3:[function(require,module,exports){
-(function (process){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-'use strict';
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var validateFormat = function validateFormat(format) {};
-
-if (process.env.NODE_ENV !== 'production') {
-  validateFormat = function validateFormat(format) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  };
-}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-}
-
-module.exports = invariant;
-}).call(this,require('_process'))
-},{"_process":8}],4:[function(require,module,exports){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-/*eslint-disable no-self-compare */
-
-'use strict';
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
-
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
-
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
-
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  // Test for A's keys different from B.
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-module.exports = shallowEqual;
-},{}],5:[function(require,module,exports){
-(function (process){
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-'use strict';
-
-var emptyFunction = require('./emptyFunction');
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var warning = emptyFunction;
-
-if (process.env.NODE_ENV !== 'production') {
-  var printWarning = function printWarning(format) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    var argIndex = 0;
-    var message = 'Warning: ' + format.replace(/%s/g, function () {
-      return args[argIndex++];
-    });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-
-  warning = function warning(condition, format) {
-    if (format === undefined) {
-      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-    }
-
-    if (format.indexOf('Failed Composite propType: ') === 0) {
-      return; // Ignore CompositeComponent proptype check.
-    }
-
-    if (!condition) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-        args[_key2 - 2] = arguments[_key2];
-      }
-
-      printWarning.apply(undefined, [format].concat(args));
-    }
-  };
-}
-
-module.exports = warning;
-}).call(this,require('_process'))
-},{"./emptyFunction":2,"_process":8}],6:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -653,7 +433,7 @@ function toNumber(value) {
 module.exports = debounce;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],7:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -745,7 +525,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],8:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -931,7 +711,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],9:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -942,11 +722,25 @@ process.umask = function() { return 0; };
 
 'use strict';
 
+var printWarning = function() {};
+
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = require('fbjs/lib/invariant');
-  var warning = require('fbjs/lib/warning');
   var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
   var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
 }
 
 /**
@@ -963,7 +757,7 @@ if (process.env.NODE_ENV !== 'production') {
 function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
   if (process.env.NODE_ENV !== 'production') {
     for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+      if (has(typeSpecs, typeSpecName)) {
         var error;
         // Prop type validation may throw. In case they do, we don't want to
         // fail the render phase where it didn't fail before. So we log it.
@@ -971,12 +765,28 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
         try {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
           error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
         } catch (ex) {
           error = ex;
         }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
         if (error instanceof Error && !(error.message in loggedTypeFailures)) {
           // Only monitor this failure once because there tends to be a lot of the
           // same error.
@@ -984,17 +794,30 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
           var stack = getStack ? getStack() : '';
 
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
         }
       }
     }
   }
 }
 
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (process.env.NODE_ENV !== 'production') {
+    loggedTypeFailures = {};
+  }
+}
+
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":13,"_process":8,"fbjs/lib/invariant":3,"fbjs/lib/warning":5}],10:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":9,"_process":4}],6:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1004,9 +827,11 @@ module.exports = checkPropTypes;
 
 'use strict';
 
-var emptyFunction = require('fbjs/lib/emptyFunction');
-var invariant = require('fbjs/lib/invariant');
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
+
+function emptyFunction() {}
+function emptyFunctionWithReset() {}
+emptyFunctionWithReset.resetWarningCache = emptyFunction;
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -1014,12 +839,13 @@ module.exports = function() {
       // It is still safe when called from React.
       return;
     }
-    invariant(
-      false,
+    var err = new Error(
       'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
       'Use PropTypes.checkPropTypes() to call them. ' +
       'Read more at http://fb.me/use-check-prop-types'
     );
+    err.name = 'Invariant Violation';
+    throw err;
   };
   shim.isRequired = shim;
   function getShim() {
@@ -1039,22 +865,25 @@ module.exports = function() {
     any: shim,
     arrayOf: getShim,
     element: shim,
+    elementType: shim,
     instanceOf: getShim,
     node: shim,
     objectOf: getShim,
     oneOf: getShim,
     oneOfType: getShim,
     shape: getShim,
-    exact: getShim
+    exact: getShim,
+
+    checkPropTypes: emptyFunctionWithReset,
+    resetWarningCache: emptyFunction
   };
 
-  ReactPropTypes.checkPropTypes = emptyFunction;
   ReactPropTypes.PropTypes = ReactPropTypes;
 
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":13,"fbjs/lib/emptyFunction":2,"fbjs/lib/invariant":3}],11:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":9}],7:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1065,13 +894,33 @@ module.exports = function() {
 
 'use strict';
 
-var emptyFunction = require('fbjs/lib/emptyFunction');
-var invariant = require('fbjs/lib/invariant');
-var warning = require('fbjs/lib/warning');
+var ReactIs = require('react-is');
 var assign = require('object-assign');
 
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 var checkPropTypes = require('./checkPropTypes');
+
+var has = Function.call.bind(Object.prototype.hasOwnProperty);
+var printWarning = function() {};
+
+if (process.env.NODE_ENV !== 'production') {
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+function emptyFunctionThatReturnsNull() {
+  return null;
+}
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -1162,6 +1011,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     any: createAnyTypeChecker(),
     arrayOf: createArrayOfTypeChecker,
     element: createElementTypeChecker(),
+    elementType: createElementTypeTypeChecker(),
     instanceOf: createInstanceTypeChecker,
     node: createNodeChecker(),
     objectOf: createObjectOfTypeChecker,
@@ -1215,12 +1065,13 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       if (secret !== ReactPropTypesSecret) {
         if (throwOnDirectAccess) {
           // New behavior only for users of `prop-types` package
-          invariant(
-            false,
+          var err = new Error(
             'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
             'Use `PropTypes.checkPropTypes()` to call them. ' +
             'Read more at http://fb.me/use-check-prop-types'
           );
+          err.name = 'Invariant Violation';
+          throw err;
         } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
@@ -1229,15 +1080,12 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
             // Avoid spamming the console because they are often not actionable except for lib authors
             manualPropTypeWarningCount < 3
           ) {
-            warning(
-              false,
+            printWarning(
               'You are manually calling a React.PropTypes validation ' +
-              'function for the `%s` prop on `%s`. This is deprecated ' +
+              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
               'and will throw in the standalone `prop-types` package. ' +
               'You may be seeing this warning due to a third-party PropTypes ' +
-              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
-              propFullName,
-              componentName
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
             );
             manualPropTypeCallCache[cacheKey] = true;
             manualPropTypeWarningCount++;
@@ -1281,7 +1129,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   }
 
   function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
+    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
   }
 
   function createArrayOfTypeChecker(typeChecker) {
@@ -1317,6 +1165,18 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     return createChainableTypeChecker(validate);
   }
 
+  function createElementTypeTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!ReactIs.isValidElementType(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
   function createInstanceTypeChecker(expectedClass) {
     function validate(props, propName, componentName, location, propFullName) {
       if (!(props[propName] instanceof expectedClass)) {
@@ -1331,8 +1191,17 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
   function createEnumTypeChecker(expectedValues) {
     if (!Array.isArray(expectedValues)) {
-      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
-      return emptyFunction.thatReturnsNull;
+      if (process.env.NODE_ENV !== 'production') {
+        if (arguments.length > 1) {
+          printWarning(
+            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
+            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
+          );
+        } else {
+          printWarning('Invalid argument supplied to oneOf, expected an array.');
+        }
+      }
+      return emptyFunctionThatReturnsNull;
     }
 
     function validate(props, propName, componentName, location, propFullName) {
@@ -1343,8 +1212,14 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
         }
       }
 
-      var valuesString = JSON.stringify(expectedValues);
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
+        var type = getPreciseType(value);
+        if (type === 'symbol') {
+          return String(value);
+        }
+        return value;
+      });
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
     }
     return createChainableTypeChecker(validate);
   }
@@ -1360,7 +1235,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
         return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
       }
       for (var key in propValue) {
-        if (propValue.hasOwnProperty(key)) {
+        if (has(propValue, key)) {
           var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
           if (error instanceof Error) {
             return error;
@@ -1374,21 +1249,18 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
   function createUnionTypeChecker(arrayOfTypeCheckers) {
     if (!Array.isArray(arrayOfTypeCheckers)) {
-      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
-      return emptyFunction.thatReturnsNull;
+      process.env.NODE_ENV !== 'production' ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      return emptyFunctionThatReturnsNull;
     }
 
     for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
       var checker = arrayOfTypeCheckers[i];
       if (typeof checker !== 'function') {
-        warning(
-          false,
+        printWarning(
           'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
-          'received %s at index %s.',
-          getPostfixForTypeWarning(checker),
-          i
+          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
         );
-        return emptyFunction.thatReturnsNull;
+        return emptyFunctionThatReturnsNull;
       }
     }
 
@@ -1520,6 +1392,11 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       return true;
     }
 
+    // falsy value can't be a Symbol
+    if (!propValue) {
+      return false;
+    }
+
     // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
     if (propValue['@@toStringTag'] === 'Symbol') {
       return true;
@@ -1594,13 +1471,14 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   }
 
   ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
   ReactPropTypes.PropTypes = ReactPropTypes;
 
   return ReactPropTypes;
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":9,"./lib/ReactPropTypesSecret":13,"_process":8,"fbjs/lib/emptyFunction":2,"fbjs/lib/invariant":3,"fbjs/lib/warning":5,"object-assign":7}],12:[function(require,module,exports){
+},{"./checkPropTypes":5,"./lib/ReactPropTypesSecret":9,"_process":4,"object-assign":3,"react-is":12}],8:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1610,21 +1488,12 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
  */
 
 if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
+  var ReactIs = require('react-is');
 
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = require('./factoryWithTypeCheckers')(isValidElement, throwOnDirectAccess);
+  module.exports = require('./factoryWithTypeCheckers')(ReactIs.isElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -1632,7 +1501,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":10,"./factoryWithTypeCheckers":11,"_process":8}],13:[function(require,module,exports){
+},{"./factoryWithThrowingShims":6,"./factoryWithTypeCheckers":7,"_process":4,"react-is":12}],9:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1646,39 +1515,224 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],14:[function(require,module,exports){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
+},{}],10:[function(require,module,exports){
+(function (process){
+/** @license React v16.13.0
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * @providesModule shallowCompare
  */
 
 'use strict';
 
-var shallowEqual = require('fbjs/lib/shallowEqual');
 
-/**
- * Does a shallow comparison for props and state.
- * See ReactComponentWithPureRenderMixin
- * See also https://facebook.github.io/react/docs/shallow-compare.html
- */
-function shallowCompare(instance, nextProps, nextState) {
-  return (
-    !shallowEqual(instance.props, nextProps) ||
-    !shallowEqual(instance.state, nextState)
-  );
+
+if (process.env.NODE_ENV !== "production") {
+  (function() {
+'use strict';
+
+// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
+// (unstable) APIs that have been removed. Can we remove the symbols?
+
+var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
+var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
+var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
+var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
+var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 0xead9;
+var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
+var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
+var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 0xead7;
+
+function isValidElementType(type) {
+  return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
 }
 
-module.exports = shallowCompare;
+function typeOf(object) {
+  if (typeof object === 'object' && object !== null) {
+    var $$typeof = object.$$typeof;
 
-},{"fbjs/lib/shallowEqual":4}],15:[function(require,module,exports){
+    switch ($$typeof) {
+      case REACT_ELEMENT_TYPE:
+        var type = object.type;
+
+        switch (type) {
+          case REACT_ASYNC_MODE_TYPE:
+          case REACT_CONCURRENT_MODE_TYPE:
+          case REACT_FRAGMENT_TYPE:
+          case REACT_PROFILER_TYPE:
+          case REACT_STRICT_MODE_TYPE:
+          case REACT_SUSPENSE_TYPE:
+            return type;
+
+          default:
+            var $$typeofType = type && type.$$typeof;
+
+            switch ($$typeofType) {
+              case REACT_CONTEXT_TYPE:
+              case REACT_FORWARD_REF_TYPE:
+              case REACT_LAZY_TYPE:
+              case REACT_MEMO_TYPE:
+              case REACT_PROVIDER_TYPE:
+                return $$typeofType;
+
+              default:
+                return $$typeof;
+            }
+
+        }
+
+      case REACT_PORTAL_TYPE:
+        return $$typeof;
+    }
+  }
+
+  return undefined;
+} // AsyncMode is deprecated along with isAsyncMode
+
+var AsyncMode = REACT_ASYNC_MODE_TYPE;
+var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+var ContextConsumer = REACT_CONTEXT_TYPE;
+var ContextProvider = REACT_PROVIDER_TYPE;
+var Element = REACT_ELEMENT_TYPE;
+var ForwardRef = REACT_FORWARD_REF_TYPE;
+var Fragment = REACT_FRAGMENT_TYPE;
+var Lazy = REACT_LAZY_TYPE;
+var Memo = REACT_MEMO_TYPE;
+var Portal = REACT_PORTAL_TYPE;
+var Profiler = REACT_PROFILER_TYPE;
+var StrictMode = REACT_STRICT_MODE_TYPE;
+var Suspense = REACT_SUSPENSE_TYPE;
+var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
+
+function isAsyncMode(object) {
+  {
+    if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+      hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+
+      console['warn']('The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
+    }
+  }
+
+  return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+}
+function isConcurrentMode(object) {
+  return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+}
+function isContextConsumer(object) {
+  return typeOf(object) === REACT_CONTEXT_TYPE;
+}
+function isContextProvider(object) {
+  return typeOf(object) === REACT_PROVIDER_TYPE;
+}
+function isElement(object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+}
+function isForwardRef(object) {
+  return typeOf(object) === REACT_FORWARD_REF_TYPE;
+}
+function isFragment(object) {
+  return typeOf(object) === REACT_FRAGMENT_TYPE;
+}
+function isLazy(object) {
+  return typeOf(object) === REACT_LAZY_TYPE;
+}
+function isMemo(object) {
+  return typeOf(object) === REACT_MEMO_TYPE;
+}
+function isPortal(object) {
+  return typeOf(object) === REACT_PORTAL_TYPE;
+}
+function isProfiler(object) {
+  return typeOf(object) === REACT_PROFILER_TYPE;
+}
+function isStrictMode(object) {
+  return typeOf(object) === REACT_STRICT_MODE_TYPE;
+}
+function isSuspense(object) {
+  return typeOf(object) === REACT_SUSPENSE_TYPE;
+}
+
+exports.AsyncMode = AsyncMode;
+exports.ConcurrentMode = ConcurrentMode;
+exports.ContextConsumer = ContextConsumer;
+exports.ContextProvider = ContextProvider;
+exports.Element = Element;
+exports.ForwardRef = ForwardRef;
+exports.Fragment = Fragment;
+exports.Lazy = Lazy;
+exports.Memo = Memo;
+exports.Portal = Portal;
+exports.Profiler = Profiler;
+exports.StrictMode = StrictMode;
+exports.Suspense = Suspense;
+exports.isAsyncMode = isAsyncMode;
+exports.isConcurrentMode = isConcurrentMode;
+exports.isContextConsumer = isContextConsumer;
+exports.isContextProvider = isContextProvider;
+exports.isElement = isElement;
+exports.isForwardRef = isForwardRef;
+exports.isFragment = isFragment;
+exports.isLazy = isLazy;
+exports.isMemo = isMemo;
+exports.isPortal = isPortal;
+exports.isProfiler = isProfiler;
+exports.isStrictMode = isStrictMode;
+exports.isSuspense = isSuspense;
+exports.isValidElementType = isValidElementType;
+exports.typeOf = typeOf;
+  })();
+}
+
+}).call(this,require('_process'))
+},{"_process":4}],11:[function(require,module,exports){
+/** @license React v16.13.0
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+'use strict';var b="function"===typeof Symbol&&Symbol.for,c=b?Symbol.for("react.element"):60103,d=b?Symbol.for("react.portal"):60106,e=b?Symbol.for("react.fragment"):60107,f=b?Symbol.for("react.strict_mode"):60108,g=b?Symbol.for("react.profiler"):60114,h=b?Symbol.for("react.provider"):60109,k=b?Symbol.for("react.context"):60110,l=b?Symbol.for("react.async_mode"):60111,m=b?Symbol.for("react.concurrent_mode"):60111,n=b?Symbol.for("react.forward_ref"):60112,p=b?Symbol.for("react.suspense"):60113,q=b?
+Symbol.for("react.suspense_list"):60120,r=b?Symbol.for("react.memo"):60115,t=b?Symbol.for("react.lazy"):60116,v=b?Symbol.for("react.block"):60121,w=b?Symbol.for("react.fundamental"):60117,x=b?Symbol.for("react.responder"):60118,y=b?Symbol.for("react.scope"):60119;
+function z(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c:switch(a=a.type,a){case l:case m:case e:case g:case f:case p:return a;default:switch(a=a&&a.$$typeof,a){case k:case n:case t:case r:case h:return a;default:return u}}case d:return u}}}function A(a){return z(a)===m}exports.AsyncMode=l;exports.ConcurrentMode=m;exports.ContextConsumer=k;exports.ContextProvider=h;exports.Element=c;exports.ForwardRef=n;exports.Fragment=e;exports.Lazy=t;exports.Memo=r;exports.Portal=d;
+exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;exports.isAsyncMode=function(a){return A(a)||z(a)===l};exports.isConcurrentMode=A;exports.isContextConsumer=function(a){return z(a)===k};exports.isContextProvider=function(a){return z(a)===h};exports.isElement=function(a){return"object"===typeof a&&null!==a&&a.$$typeof===c};exports.isForwardRef=function(a){return z(a)===n};exports.isFragment=function(a){return z(a)===e};exports.isLazy=function(a){return z(a)===t};
+exports.isMemo=function(a){return z(a)===r};exports.isPortal=function(a){return z(a)===d};exports.isProfiler=function(a){return z(a)===g};exports.isStrictMode=function(a){return z(a)===f};exports.isSuspense=function(a){return z(a)===p};
+exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===w||a.$$typeof===x||a.$$typeof===y||a.$$typeof===v)};exports.typeOf=z;
+
+},{}],12:[function(require,module,exports){
+(function (process){
+'use strict';
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./cjs/react-is.production.min.js');
+} else {
+  module.exports = require('./cjs/react-is.development.js');
+}
+
+}).call(this,require('_process'))
+},{"./cjs/react-is.development.js":10,"./cjs/react-is.production.min.js":11,"_process":4}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -1727,7 +1781,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
 /**
@@ -1735,568 +1789,612 @@ function escapeRegExp(str) {
  */
 
 var Geolookup = function (_React$Component) {
-  _inherits(Geolookup, _React$Component);
+    _inherits(Geolookup, _React$Component);
 
-  /**
-   * The constructor. Sets the initial state.
-   * @param  {Object} props The properties object.
-   */
-  function Geolookup(props) {
-    _classCallCheck(this, Geolookup);
+    /**
+    * The constructor. Sets the initial state.
+    * @param  {Object} props The properties object.
+    */
+    function Geolookup(props) {
+        _classCallCheck(this, Geolookup);
 
-    var _this = _possibleConstructorReturn(this, (Geolookup.__proto__ || Object.getPrototypeOf(Geolookup)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Geolookup.__proto__ || Object.getPrototypeOf(Geolookup)).call(this, props));
 
-    _this.onInputChange = function (userInput) {
-      _this.setState({ userInput: userInput }, _this.onAfterInputChange);
-    };
-
-    _this.onAfterInputChange = function () {
-      if (!_this.state.isSuggestsHidden && !_this.disableAutoLookup) {
-        _this.showSuggests();
-      }
-      _this.props.onChange(_this.state.userInput);
-    };
-
-    _this.onInputFocus = function () {
-      _this.props.onFocus();
-      if (!_this.disableAutoLookup) {
-        _this.showSuggests();
-      }
-    };
-
-    _this.onInputBlur = function () {
-      if (!_this.state.ignoreBlur && !_this.disableAutoLookup) {
-        _this.hideSuggests();
-      }
-    };
-
-    _this.onButtonClick = function () {
-      if (_this.state.isSuggestsHidden && _this.disableAutoLookup) {
-        _this.showSuggests();
-      } else {
-        _this.hideSuggests();
-      }
-    };
-
-    _this.onNext = function () {
-      return _this.activateSuggest('next');
-    };
-
-    _this.onPrev = function () {
-      return _this.activateSuggest('prev');
-    };
-
-    _this.onSelect = function () {
-      return _this.selectSuggest(_this.state.activeSuggest);
-    };
-
-    _this.onSuggestMouseDown = function () {
-      return _this.setState({ ignoreBlur: true });
-    };
-
-    _this.onSuggestMouseOut = function () {
-      return _this.setState({ ignoreBlur: false });
-    };
-
-    _this.onSuggestNoResults = function () {
-      _this.props.onSuggestNoResults(_this.state.userInput);
-    };
-
-    _this.hideSuggests = function () {
-      _this.props.onBlur(_this.state.userInput);
-      _this.timer = setTimeout(function () {
-        _this.setState({
-          isSuggestsHidden: true,
-          activeSuggest: null
-        });
-      }, 100);
-    };
-
-    _this.selectSuggest = function (suggest) {
-      if (!suggest) {
-        suggest = {
-          label: _this.state.userInput
+        _this.state = {
+            isSuggestsHidden: true,
+            isLoading: false,
+            userInput: props.initialValue,
+            activeSuggest: null,
+            suggests: []
         };
-      }
 
-      _this.setState({
-        isSuggestsHidden: true,
-        userInput: suggest.label
-      });
+        _this.onInputChange = _this.onInputChange.bind(_this);
+        _this.onAfterInputChange = _this.onAfterInputChange.bind(_this);
+        _this.onInputFocus = _this.onInputFocus.bind(_this);
+        _this.onInputBlur = _this.onInputBlur.bind(_this);
+        _this.onButtonClick = _this.onButtonClick.bind(_this);
+        _this.onNext = _this.onNext.bind(_this);
+        _this.onPrev = _this.onPrev.bind(_this);
+        _this.onSelect = _this.onSelect.bind(_this);
+        _this.onSuggestMouseDown = _this.onSuggestMouseDown.bind(_this);
+        _this.onSuggestMouseOut = _this.onSuggestMouseOut.bind(_this);
+        _this.onSuggestNoResults = _this.onSuggestNoResults.bind(_this);
+        _this.blur = _this.blur.bind(_this);
+        _this.focus = _this.focus.bind(_this);
+        _this.update = _this.update.bind(_this);
+        _this.clear = _this.clear.bind(_this);
+        _this.searchSuggests = _this.searchSuggests.bind(_this);
+        _this.updateSuggests = _this.updateSuggests.bind(_this);
+        _this.updateActiveSuggest = _this.updateActiveSuggest.bind(_this);
+        _this.showSuggests = _this.showSuggests.bind(_this);
+        _this.hideSuggests = _this.hideSuggests.bind(_this);
+        _this.activateSuggest = _this.activateSuggest.bind(_this);
+        _this.selectSuggest = _this.selectSuggest.bind(_this);
+        _this.geocodeSuggest = _this.geocodeSuggest.bind(_this);
 
-      if (suggest.location) {
-        _this.setState({ ignoreBlur: false });
-        _this.props.onSuggestSelect(suggest);
-        return;
-      }
-
-      _this.geocodeSuggest(suggest);
-    };
-
-    _this.state = {
-      isSuggestsHidden: true,
-      isLoading: false,
-      userInput: props.initialValue,
-      activeSuggest: null,
-      suggests: []
-    };
-
-    _this.onInputChange = _this.onInputChange.bind(_this);
-    _this.onAfterInputChange = _this.onAfterInputChange.bind(_this);
-
-    if (props.queryDelay) {
-      _this.onAfterInputChange = (0, _lodash2.default)(_this.onAfterInputChange, props.queryDelay);
-    }
-
-    _this.geocodeProvider = props.geocodeProvider;
-    _this.disableAutoLookup = props.disableAutoLookup;
-    return _this;
-  }
-
-  /**
-   * Change inputValue if prop changes
-   * @param {Object} props The new props
-   */
-
-
-  _createClass(Geolookup, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(props) {
-      if (this.props.initialValue !== props.initialValue) {
-        this.setState({ userInput: props.initialValue });
-      }
-    }
-
-    /**
-     * Called on the client side after component is mounted.
-     * Google api sdk object will be obtained and cached as a instance property.
-     * Necessary objects of google api will also be determined and saved.
-     */
-
-  }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      if (typeof window === 'undefined') {
-        return;
-      }
-
-      // if no geocodeProvider and no onGeocodeSugegst function is
-      // set, use google apis
-      if (!this.geocodeProvider && typeof this.props.onGeocodeSuggest() === 'undefined') {
-        // use google apis
-        var googleMaps = this.props.googleMaps || window.google && // eslint-disable-line no-extra-parens
-        window.google.maps || this.googleMaps;
-        this.googleMaps = googleMaps;
-        /* istanbul ignore next */
-        if (!googleMaps) {
-          return;
+        if (props.queryDelay) {
+            _this.onAfterInputChange = (0, _lodash2.default)(_this.onAfterInputChange, props.queryDelay);
         }
-        this.autocompleteService = new googleMaps.places.AutocompleteService();
-        this.geocoder = new googleMaps.Geocoder();
-      }
+
+        _this.geocodeProvider = props.geocodeProvider;
+        _this.disableAutoLookup = props.disableAutoLookup;
+        _this.dom = { input: null };
+        return _this;
     }
 
     /**
-     * When the component will unmount
-     */
-
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      clearTimeout(this.timer);
-    }
-
-    /**
-     * When the input changed
-     * @param {String} userInput The input value of the user
-     */
+    * Change inputValue if prop changes
+    * @param {Object} props The new props
+    */
 
 
-    /**
-     * On After the input got changed
-     */
-
-
-    /**
-     * When the input gets focused
-     */
-
-
-    /**
-     * When the input gets blurred
-     */
-
-
-    /**
-     * When the search button gets clicked
-     */
-
-  }, {
-    key: 'focus',
-
-
-    /**
-     * Focus the input
-     */
-    value: function focus() {
-      this.refs.input.focus();
-    }
-
-    /**
-     * Blur the input
-     */
-
-  }, {
-    key: 'blur',
-    value: function blur() {
-      this.refs.input.blur();
-    }
-
-    /**
-     * Update the value of the user input
-     * @param {String} userInput the new value of the user input
-     */
-
-  }, {
-    key: 'update',
-    value: function update(userInput) {
-      this.setState({ userInput: userInput });
-      this.props.onChange(userInput);
-    }
-
-    /*
-     * Clear the input and close the suggestion pane
-     */
-
-  }, {
-    key: 'clear',
-    value: function clear() {
-      this.setState({ userInput: '' }, this.hideSuggests);
-    }
-
-    /**
-     * Search for new suggests
-     */
-
-  }, {
-    key: 'searchSuggests',
-    value: function searchSuggests() {
-      var _this2 = this;
-
-      if (!this.state.userInput) {
-        this.updateSuggests();
-        return;
-      }
-
-      this.setState({ isLoading: true }, function () {
-        if (typeof _this2.props.onSuggestsLookup() === 'undefined') {
-          if (_this2.props.geocodeProvider) {
-            // Use props defined geocodeProvider.lookup
-            _this2.props.geocodeProvider.lookup(_this2.state.userInput).then(function (suggestsResults) {
-              _this2.setState({ isLoading: false });
-              _this2.updateSuggests(suggestsResults || [], // can be null
-              function () {
-                if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
-                  _this2.activateSuggest('next');
-                }
-              });
-            }).catch(function (error) {
-              console.error('geocodeProvider lookup Error: ', error);
-            });
-          } else {
-            // Use Google Places lookup
-            var options = {
-              input: _this2.state.userInput
-            };
-
-            ['location', 'radius', 'bounds', 'types'].forEach(function (option) {
-              if (_this2.props[option]) {
-                options[option] = _this2.props[option];
-              }
-            });
-
-            if (_this2.props.country) {
-              options.componentRestrictions = {
-                country: _this2.props.country
-              };
+    _createClass(Geolookup, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(props) {
+            if (this.props.initialValue !== props.initialValue) {
+                this.setState({ userInput: props.initialValue });
             }
-            _this2.autocompleteService.getPlacePredictions(options, function (suggestsResults) {
-              _this2.setState({ isLoading: false });
-              _this2.updateSuggests(suggestsResults || [], // can be null
-              function () {
-                if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
-                  _this2.activateSuggest('next');
-                }
-              });
-            });
-          }
-        } else {
-          // Use props defined onSuggestLookup
-          _this2.props.onSuggestsLookup(_this2.state.userInput).then(function (suggestsResults) {
-            _this2.setState({ isLoading: false });
-            _this2.updateSuggests(suggestsResults || [], // can be null
-            function () {
-              if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
-                _this2.activateSuggest('next');
-              }
-            });
-          }).catch(function (error) {
-            console.error('onSuggestsLookup Search Error: ', error);
-          });
-        }
-      });
-    }
-
-    /**
-     * Update the suggests
-     * @param {Array} suggestsResults The new google suggests
-     * @param {Function} callback Called once the state has been updated
-     */
-
-  }, {
-    key: 'updateSuggests',
-    value: function updateSuggests() {
-      var _this3 = this;
-
-      var suggestsResults = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      var callback = arguments[1];
-
-      var suggests = [],
-          regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
-          skipSuggest = this.props.skipSuggest,
-          maxFixtures = 10,
-          fixturesSearched = 0,
-          activeSuggest = null;
-
-      this.props.fixtures.forEach(function (suggest) {
-        if (fixturesSearched >= maxFixtures) {
-          return;
         }
 
-        if (!skipSuggest(suggest) && suggest.label.match(regex)) {
-          fixturesSearched++;
+        /**
+        * Called on the client side after component is mounted.
+        * Google api sdk object will be obtained and cached as a instance property.
+        * Necessary objects of google api will also be determined and saved.
+        */
 
-          suggest.placeId = suggest.label;
-          suggest.isFixture = true;
-          suggests.push(suggest);
-        }
-      });
-
-      suggestsResults.forEach(function (suggest) {
-        if (!skipSuggest(suggest)) {
-          suggests.push({
-            label: _this3.props.getSuggestLabel(suggest),
-            placeId: suggest.place_id,
-            raw: suggest,
-            isFixture: false
-          });
-        }
-      });
-
-      activeSuggest = this.updateActiveSuggest(suggests);
-      this.props.onSuggestResults(suggests);
-      this.setState({ suggests: suggests, activeSuggest: activeSuggest }, callback);
-    }
-
-    /**
-     * Return the new activeSuggest object after suggests have been updated
-     * @param {Array} suggests The new list of suggests
-     * @return {Object} The new activeSuggest
-     **/
-
-  }, {
-    key: 'updateActiveSuggest',
-    value: function updateActiveSuggest() {
-      var suggests = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-      var activeSuggest = this.state.activeSuggest;
-
-      if (activeSuggest) {
-        var newSuggest = suggests.find(function (listedSuggest) {
-          return activeSuggest.placeId === listedSuggest.placeId && activeSuggest.isFixture === listedSuggest.isFixture;
-        });
-
-        activeSuggest = newSuggest || null;
-      }
-
-      return activeSuggest;
-    }
-
-    /**
-     * Show the suggestions
-     */
-
-  }, {
-    key: 'showSuggests',
-    value: function showSuggests() {
-      this.searchSuggests();
-      this.setState({ isSuggestsHidden: false });
-    }
-
-    /**
-     * Hide the suggestions
-     */
-
-  }, {
-    key: 'activateSuggest',
-
-
-    /**
-     * Activate a new suggest
-     * @param {String} direction The direction in which to activate new suggest
-     */
-    value: function activateSuggest(direction) {
-      // eslint-disable-line complexity
-      if (this.state.isSuggestsHidden) {
-        this.showSuggests();
-        return;
-      }
-
-      var suggestsCount = this.state.suggests.length - 1,
-          next = direction === 'next';
-      var newActiveSuggest = null,
-          newIndex = 0,
-          i = 0;
-
-      for (i; i <= suggestsCount; i++) {
-        if (this.state.suggests[i] === this.state.activeSuggest) {
-          newIndex = next ? i + 1 : i - 1;
-        }
-      }
-
-      if (!this.state.activeSuggest) {
-        newIndex = next ? 0 : suggestsCount;
-      }
-
-      if (newIndex >= 0 && newIndex <= suggestsCount) {
-        newActiveSuggest = this.state.suggests[newIndex];
-      }
-
-      this.props.onActivateSuggest(newActiveSuggest);
-
-      this.setState({ activeSuggest: newActiveSuggest });
-    }
-
-    /**
-     * When an item got selected
-     * @param {GeolookupItem} suggest The selected suggest item
-     */
-
-  }, {
-    key: 'geocodeSuggest',
-
-
-    /**
-     * Geocode a suggest
-     * @param  {Object} suggest The suggest
-     */
-    value: function geocodeSuggest(suggest) {
-      var _this4 = this;
-
-      if (typeof this.props.onGeocodeSuggest() === 'undefined') {
-        if (this.props.geocodeProvider) {
-          // use props defined geocodeProvider
-          this.props.geocodeProvider.geocode(suggest).then(function (geocodedResults) {
-            _this4.props.onSuggestSelect(geocodedResults);
-          });
-        } else {
-          // use default google geocode lib
-          this.geocoder.geocode(suggest.placeId && !suggest.isFixture ? { placeId: suggest.placeId } : { address: suggest.label }, function (results, status) {
-            if (status === _this4.googleMaps.GeocoderStatus.OK) {
-              var gmaps = results[0],
-                  location = gmaps.geometry.location;
-
-              suggest.gmaps = gmaps;
-              suggest.location = {
-                lat: location.lat(),
-                lng: location.lng()
-              };
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            if (typeof window === 'undefined') {
+                return;
             }
-            _this4.props.onSuggestSelect(suggest);
-          });
+
+            // if no geocodeProvider and no onGeocodeSugegst function is
+            // set, use google apis
+            if (!this.geocodeProvider && typeof this.props.onGeocodeSuggest() === 'undefined') {
+                // use google apis
+                var googleMaps = this.props.googleMaps || window.google && // eslint-disable-line no-extra-parens
+                window.google.maps || this.googleMaps;
+
+                this.googleMaps = googleMaps;
+                /* istanbul ignore next */
+                if (!googleMaps) {
+                    return;
+                }
+                this.autocompleteService = new googleMaps.places.AutocompleteService();
+                this.geocoder = new googleMaps.Geocoder();
+            }
         }
-      } else {
-        // use props defined geocode function
-        var geocodedSuggest = this.props.onGeocodeSuggest(suggest);
-        this.props.onSuggestSelect(geocodedSuggest);
-      }
-    }
 
-    /**
-     * Render the view
-     * @return {Function} The React element to render
-     */
+        /**
+        * When the component will unmount
+        */
 
-  }, {
-    key: 'render',
-    value: function render() {
-      var attributes = (0, _filterInputAttributes2.default)(this.props),
-          classes = (0, _classnames2.default)('geolookup', this.props.className, { 'geolookup--loading': this.state.isLoading }),
-          shouldRenderLabel = this.props.label && attributes.id,
-          shouldRenderButton = this.props.disableAutoLookup,
-          input = _react2.default.createElement(_input2.default, _extends({ className: this.props.inputClassName,
-        ref: 'input',
-        value: this.state.userInput,
-        ignoreEnter: !this.state.isSuggestsHidden,
-        ignoreTab: this.props.ignoreTab,
-        style: this.props.style.input,
-        onChange: this.onInputChange,
-        onFocus: this.onInputFocus,
-        onBlur: this.onInputBlur,
-        onKeyPress: this.props.onKeyPress,
-        onNext: this.onNext,
-        onPrev: this.onPrev,
-        onSelect: this.onSelect,
-        onEscape: this.hideSuggests }, attributes)),
-          button = _react2.default.createElement(
-        'button',
-        { className: this.props.buttonClassName,
-          type: 'button',
-          onClick: this.onButtonClick },
-        this.props.buttonText
-      ),
-          suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
-        style: this.props.style.suggests,
-        suggestItemStyle: this.props.style.suggestItem,
-        suggests: this.state.suggests,
-        hiddenClassName: this.props.suggestsHiddenClassName,
-        suggestItemActiveClassName: this.props.suggestItemActiveClassName,
-        activeSuggest: this.state.activeSuggest,
-        onSuggestNoResults: this.onSuggestNoResults,
-        onSuggestMouseDown: this.onSuggestMouseDown,
-        onSuggestMouseOut: this.onSuggestMouseOut,
-        onSuggestSelect: this.selectSuggest,
-        suggestItemLabelRenderer: this.props.suggestItemLabelRenderer });
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            clearTimeout(this.timer);
+        }
 
-      return _react2.default.createElement(
-        'div',
-        { className: classes },
-        _react2.default.createElement(
-          'span',
-          { className: 'geolookup__input-wrapper' },
-          shouldRenderLabel && _react2.default.createElement(
-            'label',
-            { className: 'geolookup__label',
-              htmlFor: attributes.id },
-            this.props.label
-          ),
-          input
-        ),
-        shouldRenderButton && _react2.default.createElement(
-          'span',
-          { className: 'geolookup__button-wrapper' },
-          button
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'geolookup__suggests-wrapper' },
-          suggestionsList
-        )
-      );
-    }
-  }]);
+        /**
+        * When the input changed
+        * @param {String} userInput The input value of the user
+        */
 
-  return Geolookup;
+    }, {
+        key: 'onInputChange',
+        value: function onInputChange(userInput) {
+            this.setState({ userInput: userInput }, this.onAfterInputChange);
+        }
+
+        /**
+        * On After the input got changed
+        */
+
+    }, {
+        key: 'onAfterInputChange',
+        value: function onAfterInputChange() {
+            if (!this.state.isSuggestsHidden && !this.disableAutoLookup) {
+                this.showSuggests();
+            }
+            this.props.onChange(this.state.userInput);
+        }
+
+        /**
+        * When the input gets focused
+        */
+
+    }, {
+        key: 'onInputFocus',
+        value: function onInputFocus() {
+            this.props.onFocus();
+            if (!this.disableAutoLookup) {
+                this.showSuggests();
+            }
+        }
+
+        /**
+        * When the input gets blurred
+        */
+
+    }, {
+        key: 'onInputBlur',
+        value: function onInputBlur() {
+            if (!this.state.ignoreBlur && !this.disableAutoLookup) {
+                this.hideSuggests();
+            }
+        }
+
+        /**
+        * When the search button gets clicked
+        */
+
+    }, {
+        key: 'onButtonClick',
+        value: function onButtonClick() {
+            if (this.state.isSuggestsHidden && this.disableAutoLookup) {
+                this.showSuggests();
+            } else {
+                this.hideSuggests();
+            }
+        }
+    }, {
+        key: 'onNext',
+        value: function onNext() {
+            this.activateSuggest('next');
+        }
+    }, {
+        key: 'onPrev',
+        value: function onPrev() {
+            this.activateSuggest('prev');
+        }
+    }, {
+        key: 'onSelect',
+        value: function onSelect() {
+            this.selectSuggest(this.state.activeSuggest);
+        }
+    }, {
+        key: 'onSuggestMouseDown',
+        value: function onSuggestMouseDown() {
+            this.setState({ ignoreBlur: true });
+        }
+    }, {
+        key: 'onSuggestMouseOut',
+        value: function onSuggestMouseOut() {
+            this.setState({ ignoreBlur: false });
+        }
+    }, {
+        key: 'onSuggestNoResults',
+        value: function onSuggestNoResults() {
+            this.props.onSuggestNoResults(this.state.userInput);
+        }
+
+        /**
+        * Focus the input
+        */
+
+    }, {
+        key: 'focus',
+        value: function focus() {
+            this.dom.input.focus();
+        }
+
+        /**
+        * Blur the input
+        */
+
+    }, {
+        key: 'blur',
+        value: function blur() {
+            this.dom.input.blur();
+        }
+
+        /**
+        * Update the value of the user input
+        * @param {String} userInput the new value of the user input
+        */
+
+    }, {
+        key: 'update',
+        value: function update(userInput) {
+            this.setState({ userInput: userInput });
+            this.props.onChange(userInput);
+        }
+
+        /*
+        * Clear the input and close the suggestion pane
+        */
+
+    }, {
+        key: 'clear',
+        value: function clear() {
+            this.setState({ userInput: '' }, this.hideSuggests);
+        }
+
+        /**
+        * Search for new suggests
+        */
+
+    }, {
+        key: 'searchSuggests',
+        value: function searchSuggests() {
+            var _this2 = this;
+
+            if (!this.state.userInput) {
+                this.updateSuggests();
+                return;
+            }
+
+            this.setState({ isLoading: true }, function () {
+                if (typeof _this2.props.onSuggestsLookup() === 'undefined') {
+                    if (_this2.props.geocodeProvider) {
+                        // Use props defined geocodeProvider.lookup
+                        _this2.props.geocodeProvider.lookup(_this2.state.userInput).then(function (suggestsResults) {
+                            _this2.setState({ isLoading: false });
+                            _this2.updateSuggests(suggestsResults || [], // can be null
+                            function () {
+                                if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
+                                    _this2.activateSuggest('next');
+                                }
+                            });
+                        }).catch(function (error) {
+                            console.error('geocodeProvider lookup Error: ', error);
+                        });
+                    } else {
+                        // Use Google Places lookup
+                        var options = {
+                            input: _this2.state.userInput
+                        };
+
+                        ['location', 'radius', 'bounds', 'types'].forEach(function (option) {
+                            if (_this2.props[option]) {
+                                options[option] = _this2.props[option];
+                            }
+                        });
+
+                        if (_this2.props.country) {
+                            options.componentRestrictions = {
+                                country: _this2.props.country
+                            };
+                        }
+                        _this2.autocompleteService.getPlacePredictions(options, function (suggestsResults) {
+                            _this2.setState({ isLoading: false });
+                            _this2.updateSuggests(suggestsResults || [], // can be null
+                            function () {
+                                if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
+                                    _this2.activateSuggest('next');
+                                }
+                            });
+                        });
+                    }
+                } else {
+                    // Use props defined onSuggestLookup
+                    _this2.props.onSuggestsLookup(_this2.state.userInput).then(function (suggestsResults) {
+                        _this2.setState({ isLoading: false });
+                        _this2.updateSuggests(suggestsResults || [], // can be null
+                        function () {
+                            if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
+                                _this2.activateSuggest('next');
+                            }
+                        });
+                    }).catch(function (error) {
+                        console.error('onSuggestsLookup Search Error: ', error);
+                    });
+                }
+            });
+        }
+
+        /**
+        * Update the suggests
+        * @param {Array} suggestsResults The new google suggests
+        * @param {Function} callback Called once the state has been updated
+        */
+
+    }, {
+        key: 'updateSuggests',
+        value: function updateSuggests() {
+            var _this3 = this;
+
+            var suggestsResults = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var callback = arguments[1];
+
+            var suggests = [],
+                regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
+                skipSuggest = this.props.skipSuggest,
+                maxFixtures = 10,
+                fixturesSearched = 0,
+                activeSuggest = null;
+
+            this.props.fixtures.forEach(function (suggest) {
+                if (fixturesSearched >= maxFixtures) {
+                    return;
+                }
+
+                if (!skipSuggest(suggest) && suggest.label.match(regex)) {
+                    fixturesSearched++;
+
+                    suggest.placeId = suggest.label;
+                    suggest.isFixture = true;
+                    suggests.push(suggest);
+                }
+            });
+
+            suggestsResults.forEach(function (suggest) {
+                if (!skipSuggest(suggest)) {
+                    suggests.push({
+                        label: _this3.props.getSuggestLabel(suggest),
+                        placeId: suggest.place_id,
+                        raw: suggest,
+                        isFixture: false
+                    });
+                }
+            });
+
+            activeSuggest = this.updateActiveSuggest(suggests);
+            this.props.onSuggestResults(suggests);
+            this.setState({ suggests: suggests, activeSuggest: activeSuggest }, callback);
+        }
+
+        /**
+        * Return the new activeSuggest object after suggests have been updated
+        * @param {Array} suggests The new list of suggests
+        * @return {Object} The new activeSuggest
+        **/
+
+    }, {
+        key: 'updateActiveSuggest',
+        value: function updateActiveSuggest() {
+            var suggests = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            var activeSuggest = this.state.activeSuggest;
+
+            if (activeSuggest) {
+                var newSuggest = suggests.find(function (listedSuggest) {
+                    return activeSuggest.placeId === listedSuggest.placeId && activeSuggest.isFixture === listedSuggest.isFixture;
+                });
+
+                activeSuggest = newSuggest || null;
+            }
+
+            return activeSuggest;
+        }
+
+        /**
+        * Show the suggestions
+        */
+
+    }, {
+        key: 'showSuggests',
+        value: function showSuggests() {
+            this.searchSuggests();
+            this.setState({ isSuggestsHidden: false });
+        }
+
+        /**
+        * Hide the suggestions
+        */
+
+    }, {
+        key: 'hideSuggests',
+        value: function hideSuggests() {
+            var _this4 = this;
+
+            this.props.onBlur(this.state.userInput);
+            this.timer = setTimeout(function () {
+                _this4.setState({
+                    isSuggestsHidden: true,
+                    activeSuggest: null
+                });
+            }, 100);
+        }
+
+        /**
+        * Activate a new suggest
+        * @param {String} direction The direction in which to activate new suggest
+        */
+
+    }, {
+        key: 'activateSuggest',
+        value: function activateSuggest(direction) {
+            // eslint-disable-line complexity
+            if (this.state.isSuggestsHidden) {
+                this.showSuggests();
+                return;
+            }
+
+            var suggestsCount = this.state.suggests.length - 1,
+                next = direction === 'next';
+            var newActiveSuggest = null,
+                newIndex = 0,
+                i = 0;
+
+            for (i; i <= suggestsCount; i++) {
+                if (this.state.suggests[i] === this.state.activeSuggest) {
+                    newIndex = next ? i + 1 : i - 1;
+                }
+            }
+
+            if (!this.state.activeSuggest) {
+                newIndex = next ? 0 : suggestsCount;
+            }
+
+            if (newIndex >= 0 && newIndex <= suggestsCount) {
+                newActiveSuggest = this.state.suggests[newIndex];
+            }
+
+            this.props.onActivateSuggest(newActiveSuggest);
+
+            this.setState({ activeSuggest: newActiveSuggest });
+        }
+
+        /**
+        * When an item got selected
+        * @param {GeolookupItem} suggest The selected suggest item
+        */
+
+    }, {
+        key: 'selectSuggest',
+        value: function selectSuggest(suggest) {
+            if (!suggest) {
+                // eslint-disable-next-line no-param-reassign
+                suggest = {
+                    label: this.state.userInput
+                };
+            }
+
+            this.setState({
+                isSuggestsHidden: true,
+                userInput: suggest.label
+            });
+
+            if (suggest.location) {
+                this.setState({ ignoreBlur: false });
+                this.props.onSuggestSelect(suggest);
+                return;
+            }
+
+            this.geocodeSuggest(suggest);
+        }
+
+        /**
+        * Geocode a suggest
+        * @param  {Object} suggest The suggest
+        */
+
+    }, {
+        key: 'geocodeSuggest',
+        value: function geocodeSuggest(suggest) {
+            var _this5 = this;
+
+            if (typeof this.props.onGeocodeSuggest() === 'undefined') {
+                if (this.props.geocodeProvider) {
+                    // use props defined geocodeProvider
+                    this.props.geocodeProvider.geocode(suggest).then(function (geocodedResults) {
+                        _this5.props.onSuggestSelect(geocodedResults);
+                    });
+                } else {
+                    // use default google geocode lib
+                    this.geocoder.geocode(suggest.placeId && !suggest.isFixture ? { placeId: suggest.placeId } : { address: suggest.label }, function (results, status) {
+                        if (status === _this5.googleMaps.GeocoderStatus.OK) {
+                            var gmaps = results[0],
+                                location = gmaps.geometry.location;
+
+                            suggest.gmaps = gmaps;
+                            suggest.location = {
+                                lat: location.lat(),
+                                lng: location.lng()
+                            };
+                        }
+                        _this5.props.onSuggestSelect(suggest);
+                    });
+                }
+            } else {
+                // use props defined geocode function
+                var geocodedSuggest = this.props.onGeocodeSuggest(suggest);
+
+                this.props.onSuggestSelect(geocodedSuggest);
+            }
+        }
+
+        /**
+        * Render the view
+        * @return {Function} The React element to render
+        */
+
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this6 = this;
+
+            var attributes = (0, _filterInputAttributes2.default)(this.props),
+                classes = (0, _classnames2.default)('geolookup', this.props.className, { 'geolookup--loading': this.state.isLoading }),
+                shouldRenderLabel = this.props.label && attributes.id,
+                shouldRenderButton = this.props.disableAutoLookup,
+                input = _react2.default.createElement(_input2.default, _extends({ className: this.props.inputClassName,
+                ref: function ref(node) {
+                    return _this6.dom.input = node;
+                },
+                value: this.state.userInput,
+                ignoreEnter: !this.state.isSuggestsHidden,
+                ignoreTab: this.props.ignoreTab,
+                style: this.props.style.input,
+                onChange: this.onInputChange,
+                onFocus: this.onInputFocus,
+                onBlur: this.onInputBlur,
+                onKeyPress: this.props.onKeyPress,
+                onNext: this.onNext,
+                onPrev: this.onPrev,
+                onSelect: this.onSelect,
+                onEscape: this.hideSuggests }, attributes)),
+                button = _react2.default.createElement(
+                'button',
+                { className: this.props.buttonClassName,
+                    type: 'button',
+                    onClick: this.onButtonClick },
+                this.props.buttonText
+            ),
+                suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
+                style: this.props.style.suggests,
+                suggestItemStyle: this.props.style.suggestItem,
+                suggests: this.state.suggests,
+                hiddenClassName: this.props.suggestsHiddenClassName,
+                suggestItemActiveClassName: this.props.suggestItemActiveClassName,
+                activeSuggest: this.state.activeSuggest,
+                onSuggestNoResults: this.onSuggestNoResults,
+                onSuggestMouseDown: this.onSuggestMouseDown,
+                onSuggestMouseOut: this.onSuggestMouseOut,
+                onSuggestSelect: this.selectSuggest,
+                suggestItemLabelRenderer: this.props.suggestItemLabelRenderer });
+
+            return _react2.default.createElement(
+                'div',
+                { className: classes },
+                _react2.default.createElement(
+                    'span',
+                    { className: 'geolookup__input-wrapper' },
+                    shouldRenderLabel && _react2.default.createElement(
+                        'label',
+                        { className: 'geolookup__label',
+                            htmlFor: attributes.id },
+                        this.props.label
+                    ),
+                    input
+                ),
+                shouldRenderButton && _react2.default.createElement(
+                    'span',
+                    { className: 'geolookup__button-wrapper' },
+                    button
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'geolookup__suggests-wrapper' },
+                    suggestionsList
+                )
+            );
+        }
+    }]);
+
+    return Geolookup;
 }(_react2.default.Component);
 
 /**
@@ -2315,77 +2413,77 @@ Geolookup.defaultProps = _defaults2.default;
 
 exports.default = Geolookup;
 
-},{"./defaults":16,"./filter-input-attributes":17,"./input":18,"./prop-types":19,"./suggest-list":21,"classnames":1,"lodash.debounce":6}],16:[function(require,module,exports){
+},{"./defaults":14,"./filter-input-attributes":15,"./input":16,"./prop-types":17,"./suggest-list":19,"classnames":1,"lodash.debounce":2}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 /* istanbul ignore next */
 /**
  * Default values
  */
 exports.default = {
-  fixtures: [],
-  initialValue: '',
-  placeholder: 'Search places',
-  disabled: false,
-  className: '',
-  inputClassName: '',
-  buttonClassName: 'geolookup__button',
-  buttonText: 'Search',
-  location: null,
-  radius: null,
-  bounds: null,
-  country: null,
-  types: null,
-  queryDelay: 250,
-  googleMaps: null,
-  geocodeProvider: null,
-  disableAutoLookup: false,
-  onActivateSuggest: function onActivateSuggest() {},
-  onGeocodeSuggest: function onGeocodeSuggest() {},
-  onSuggestsLookup: function onSuggestsLookup() {},
-  onSuggestSelect: function onSuggestSelect() {},
-  onSuggestResults: function onSuggestResults() {},
-  onSuggestNoResults: function onSuggestNoResults() {},
-  onFocus: function onFocus() {},
-  onBlur: function onBlur() {},
-  onChange: function onChange() {},
-  skipSuggest: function skipSuggest() {},
-  showSuggests: function showSuggests() {},
-  getSuggestLabel: function getSuggestLabel(suggest) {
-    return suggest.description;
-  },
-  autoActivateFirstSuggest: false,
-  style: {
-    'input': {},
-    'suggests': {},
-    'suggestItem': {}
-  },
-  ignoreTab: false,
-  suggestItemLabelRenderer: function suggestItemLabelRenderer(suggest) {
-    return suggest.label;
-  }
+    fixtures: [],
+    initialValue: '',
+    placeholder: 'Search places',
+    disabled: false,
+    className: '',
+    inputClassName: '',
+    buttonClassName: 'geolookup__button',
+    buttonText: 'Search',
+    location: null,
+    radius: null,
+    bounds: null,
+    country: null,
+    types: null,
+    queryDelay: 250,
+    googleMaps: null,
+    geocodeProvider: null,
+    disableAutoLookup: false,
+    onActivateSuggest: function onActivateSuggest() {/* no-op */},
+    onGeocodeSuggest: function onGeocodeSuggest() {/* no-op */},
+    onSuggestsLookup: function onSuggestsLookup() {/* no-op */},
+    onSuggestSelect: function onSuggestSelect() {/* no-op */},
+    onSuggestResults: function onSuggestResults() {/* no-op */},
+    onSuggestNoResults: function onSuggestNoResults() {/* no-op */},
+    onFocus: function onFocus() {/* no-op */},
+    onBlur: function onBlur() {/* no-op */},
+    onChange: function onChange() {/* no-op */},
+    skipSuggest: function skipSuggest() {/* no-op */},
+    showSuggests: function showSuggests() {/* no-op */},
+    getSuggestLabel: function getSuggestLabel(suggest) {
+        return suggest.description;
+    },
+    autoActivateFirstSuggest: false,
+    style: {
+        input: {},
+        suggests: {},
+        suggestItem: {}
+    },
+    ignoreTab: false,
+    suggestItemLabelRenderer: function suggestItemLabelRenderer(suggest) {
+        return suggest.label;
+    }
 };
 
-},{}],17:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 exports.default = function (props) {
-  var attributes = {};
+    var attributes = {};
 
-  allowedAttributes.forEach(function (allowedAttribute) {
-    if (props[allowedAttribute]) {
-      attributes[allowedAttribute] = props[allowedAttribute];
-    }
-  });
+    allowedAttributes.forEach(function (allowedAttribute) {
+        if (props[allowedAttribute]) {
+            attributes[allowedAttribute] = props[allowedAttribute];
+        }
+    });
 
-  return attributes;
+    return attributes;
 };
 
 /**
@@ -2399,11 +2497,11 @@ var allowedAttributes = ['autoFocus', 'disabled', 'form', 'formAction', 'formEnc
  * @return {Object} The filtered, allowed properties
  */
 
-},{}],18:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -2414,10 +2512,6 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
-
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
-
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -2425,6 +2519,10 @@ var _classnames2 = _interopRequireDefault(_classnames);
 var _filterInputAttributes = require('./filter-input-attributes');
 
 var _filterInputAttributes2 = _interopRequireDefault(_filterInputAttributes);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2440,178 +2538,215 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-var Input = function (_React$Component) {
-  _inherits(Input, _React$Component);
+var Input = function (_React$PureComponent) {
+    _inherits(Input, _React$PureComponent);
 
-  function Input() {
-    var _ref;
+    function Input(props) {
+        _classCallCheck(this, Input);
 
-    var _temp, _this, _ret;
+        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
-    _classCallCheck(this, Input);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
+        _this.dom = { input: null };
+        _this.onFocus = _this.onFocus.bind(_this);
+        _this.onChange = _this.onChange.bind(_this);
+        _this.onBlur = _this.onBlur.bind(_this);
+        _this.onKeyPress = _this.onKeyPress.bind(_this);
+        _this.onInputKeyDown = _this.onInputKeyDown.bind(_this);
+        _this.focus = _this.focus.bind(_this);
+        _this.blur = _this.blur.bind(_this);
+        return _this;
     }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Input.__proto__ || Object.getPrototypeOf(Input)).call.apply(_ref, [this].concat(args))), _this), _this.onChange = function () {
-      _this.props.onChange(_this.refs.input.value);
-    }, _this.onFocus = function () {
-      _this.props.onFocus();
-    }, _this.onBlur = function () {
-      _this.props.onBlur();
-    }, _this.onKeyPress = function (event) {
-      _this.props.onKeyPress(event);
-    }, _this.onInputKeyDown = function (event) {
-      // eslint-disable-line complexity
-      switch (event.which) {
-        case 40:
-          // DOWN
-          event.preventDefault();
-          _this.props.onNext();
-          break;
-        case 38:
-          // UP
-          event.preventDefault();
-          _this.props.onPrev();
-          break;
-        case 13:
-          // ENTER
-          if (_this.props.ignoreEnter) {
-            event.preventDefault();
-          }
-
-          _this.props.onSelect();
-          break;
-        case 9:
-          // TAB
-          if (!_this.props.ignoreTab) {
-            _this.props.onSelect();
-          }
-          break;
-        case 27:
-          // ESC
-          _this.props.onEscape();
-          break;
-        /* istanbul ignore next */
-        default:
-          break;
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(Input, [{
-    key: 'shouldComponentUpdate',
-
     /**
-     * Whether or not the component should update
-     * @param {Object} nextProps The new properties
-     * @param {Object} nextState The new state
-     * @return {Boolean} Update or not?
-     */
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
-    }
-
-    /**
-     * When the input got changed
-     */
+    * When the input got changed
+    */
 
 
-    /**
-     * When the input got focused
-     */
+    _createClass(Input, [{
+        key: 'onChange',
+        value: function onChange() {
+            this.props.onChange(this.dom.input.value);
+        }
+
+        /**
+        * When the input got focused
+        */
+
+    }, {
+        key: 'onFocus',
+        value: function onFocus() {
+            this.props.onFocus();
+        }
+
+        /**
+        * When the input loses focus
+        */
+
+    }, {
+        key: 'onBlur',
+        value: function onBlur() {
+            this.props.onBlur();
+        }
+
+        /**
+        * When a key gets pressed in the input
+        * @param  {Event} event The keypress event
+        */
+
+    }, {
+        key: 'onKeyPress',
+        value: function onKeyPress(event) {
+            this.props.onKeyPress(event);
+        }
+
+        /**
+        * When a key gets pressed in the input
+        * @param  {Event} event The keydown event
+        */
+
+    }, {
+        key: 'onInputKeyDown',
+        value: function onInputKeyDown(event) {
+            // eslint-disable-line complexity
+            switch (event.which) {
+                case 40:
+                    // DOWN
+                    event.preventDefault();
+                    this.props.onNext();
+                    break;
+                case 38:
+                    // UP
+                    event.preventDefault();
+                    this.props.onPrev();
+                    break;
+                case 13:
+                    // ENTER
+                    if (this.props.ignoreEnter) {
+                        event.preventDefault();
+                    }
+
+                    this.props.onSelect();
+                    break;
+                case 9:
+                    // TAB
+                    if (!this.props.ignoreTab) {
+                        this.props.onSelect();
+                    }
+                    break;
+                case 27:
+                    // ESC
+                    this.props.onEscape();
+                    break;
+                /* istanbul ignore next */
+                default:
+                    break;
+            }
+        }
+
+        /**
+        * Focus the input
+        */
+
+    }, {
+        key: 'focus',
+        value: function focus() {
+            this.dom.input.focus();
+        }
+
+        /**
+        * Blur the input
+        */
+
+    }, {
+        key: 'blur',
+        value: function blur() {
+            this.dom.input.blur();
+        }
+
+        /**
+        * Render the view
+        * @return {Function} The React element to render
+        */
+
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var attributes = (0, _filterInputAttributes2.default)(this.props),
+                classes = (0, _classnames2.default)('geolookup__input', this.props.className);
+
+            return _react2.default.createElement('input', _extends({
+                className: classes,
+                ref: function ref(node) {
+                    return _this2.dom.input = node;
+                },
+                type: 'text',
+                autoComplete: 'off'
+            }, attributes, {
+                value: this.props.value,
+                style: this.props.style,
+                onKeyDown: this.onInputKeyDown,
+                onChange: this.onChange,
+                onKeyPress: this.onKeyPress,
+                onFocus: this.onFocus,
+                onBlur: this.onBlur
+            }));
+        }
+    }]);
+
+    return Input;
+}(_react2.default.PureComponent);
+
+/**
+ * Types for the properties
+ * @type {Object}
+ */
 
 
-    /**
-     * When the input loses focus
-     */
-
-
-    /**
-     * When a key gets pressed in the input
-     * @param  {Event} event The keypress event
-     */
-
-
-    /**
-     * When a key gets pressed in the input
-     * @param  {Event} event The keydown event
-     */
-
-  }, {
-    key: 'focus',
-
-
-    /**
-     * Focus the input
-     */
-    value: function focus() {
-      this.refs.input.focus();
-    }
-
-    /**
-     * Blur the input
-     */
-
-  }, {
-    key: 'blur',
-    value: function blur() {
-      this.refs.input.blur();
-    }
-
-    /**
-     * Render the view
-     * @return {Function} The React element to render
-     */
-
-  }, {
-    key: 'render',
-    value: function render() {
-      var attributes = (0, _filterInputAttributes2.default)(this.props),
-          classes = (0, _classnames2.default)('geolookup__input', this.props.className);
-
-      return _react2.default.createElement('input', _extends({
-        className: classes,
-        ref: 'input',
-        type: 'text',
-        autoComplete: 'off'
-      }, attributes, {
-        value: this.props.value,
-        style: this.props.style,
-        onKeyDown: this.onInputKeyDown,
-        onChange: this.onChange,
-        onKeyPress: this.onKeyPress,
-        onFocus: this.onFocus,
-        onBlur: this.onBlur
-      }));
-    }
-  }]);
-
-  return Input;
-}(_react2.default.Component);
+Input.propTypes = {
+    ignoreTab: _propTypes2.default.bool,
+    ignoreEnter: _propTypes2.default.bool,
+    className: _propTypes2.default.string,
+    style: _propTypes2.default.object,
+    value: _propTypes2.default.string,
+    suggest: _propTypes2.default.object,
+    onKeyDown: _propTypes2.default.func,
+    onKeyPress: _propTypes2.default.func,
+    onChange: _propTypes2.default.func,
+    onFocus: _propTypes2.default.func,
+    onBlur: _propTypes2.default.func,
+    onNext: _propTypes2.default.func,
+    onPrev: _propTypes2.default.func,
+    onSelect: _propTypes2.default.func,
+    onEscape: _propTypes2.default.func
+};
 
 /**
  * Default values for the properties
  * @type {Object}
  */
-
-
 Input.defaultProps = {
-  className: '',
-  value: '',
-  ignoreTab: false,
-  onKeyDown: function onKeyDown() {},
-  onKeyPress: function onKeyPress() {}
+    className: '',
+    value: '',
+    ignoreTab: false,
+    onKeyDown: function onKeyDown() {/* no-op */},
+    onKeyPress: function onKeyPress() {/* no-op */},
+    onChange: function onChange() {/* no-op */},
+    onFocus: function onFocus() {/* no-op */},
+    onBlur: function onBlur() {/* no-op */},
+    onNext: function onNext() {/* no-op */},
+    onPrev: function onPrev() {/* no-op */},
+    onSelect: function onSelect() {/* no-op */},
+    onEscape: function onEscape() {/* no-op */}
 };
 
 exports.default = Input;
 
-},{"./filter-input-attributes":17,"classnames":1,"react-addons-shallow-compare":14}],19:[function(require,module,exports){
+},{"./filter-input-attributes":15,"classnames":1,"prop-types":8}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _propTypes = require('prop-types');
@@ -2624,52 +2759,52 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Default values
  */
 exports.default = {
-  fixtures: _propTypes2.default.array,
-  initialValue: _propTypes2.default.string,
-  placeholder: _propTypes2.default.string,
-  disabled: _propTypes2.default.bool,
-  className: _propTypes2.default.string,
-  inputClassName: _propTypes2.default.string,
-  suggestsHiddenClassName: _propTypes2.default.string,
-  suggestItemActiveClassName: _propTypes2.default.string,
-  buttonClassName: _propTypes2.default.string,
-  buttonText: _propTypes2.default.string,
-  location: _propTypes2.default.object,
-  radius: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
-  bounds: _propTypes2.default.object,
-  country: _propTypes2.default.string,
-  types: _propTypes2.default.array,
-  queryDelay: _propTypes2.default.number,
-  googleMaps: _propTypes2.default.object,
-  geocodeProvider: _propTypes2.default.object,
-  onGeocodeSuggest: _propTypes2.default.func,
-  onSuggestsLookup: _propTypes2.default.func,
-  onSuggestSelect: _propTypes2.default.func,
-  onSuggestResults: _propTypes2.default.func,
-  onFocus: _propTypes2.default.func,
-  onBlur: _propTypes2.default.func,
-  onChange: _propTypes2.default.func,
-  onKeyPress: _propTypes2.default.func,
-  skipSuggest: _propTypes2.default.func,
-  showSuggests: _propTypes2.default.func,
-  disableAutoLookup: _propTypes2.default.bool,
-  getSuggestLabel: _propTypes2.default.func,
-  autoActivateFirstSuggest: _propTypes2.default.bool,
-  style: _propTypes2.default.shape({
-    input: _propTypes2.default.object,
-    suggests: _propTypes2.default.object,
-    suggestItem: _propTypes2.default.object
-  }),
-  ignoreTab: _propTypes2.default.bool,
-  label: _propTypes2.default.string,
-  suggestItemLabelRenderer: _propTypes2.default.func
+    fixtures: _propTypes2.default.array,
+    initialValue: _propTypes2.default.string,
+    placeholder: _propTypes2.default.string,
+    disabled: _propTypes2.default.bool,
+    className: _propTypes2.default.string,
+    inputClassName: _propTypes2.default.string,
+    suggestsHiddenClassName: _propTypes2.default.string,
+    suggestItemActiveClassName: _propTypes2.default.string,
+    buttonClassName: _propTypes2.default.string,
+    buttonText: _propTypes2.default.string,
+    location: _propTypes2.default.object,
+    radius: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+    bounds: _propTypes2.default.object,
+    country: _propTypes2.default.string,
+    types: _propTypes2.default.array,
+    queryDelay: _propTypes2.default.number,
+    googleMaps: _propTypes2.default.object,
+    geocodeProvider: _propTypes2.default.object,
+    onGeocodeSuggest: _propTypes2.default.func,
+    onSuggestsLookup: _propTypes2.default.func,
+    onSuggestSelect: _propTypes2.default.func,
+    onSuggestResults: _propTypes2.default.func,
+    onFocus: _propTypes2.default.func,
+    onBlur: _propTypes2.default.func,
+    onChange: _propTypes2.default.func,
+    onKeyPress: _propTypes2.default.func,
+    skipSuggest: _propTypes2.default.func,
+    showSuggests: _propTypes2.default.func,
+    disableAutoLookup: _propTypes2.default.bool,
+    getSuggestLabel: _propTypes2.default.func,
+    autoActivateFirstSuggest: _propTypes2.default.bool,
+    style: _propTypes2.default.shape({
+        input: _propTypes2.default.object,
+        suggests: _propTypes2.default.object,
+        suggestItem: _propTypes2.default.object
+    }),
+    ignoreTab: _propTypes2.default.bool,
+    label: _propTypes2.default.string,
+    suggestItemLabelRenderer: _propTypes2.default.func
 };
 
-},{"prop-types":12}],20:[function(require,module,exports){
+},{"prop-types":8}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2678,13 +2813,13 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
-
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
-
 var _classnames2 = require('classnames');
 
 var _classnames3 = _interopRequireDefault(_classnames2);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2701,90 +2836,96 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-var SuggestItem = function (_React$Component) {
-  _inherits(SuggestItem, _React$Component);
+var SuggestItem = function (_React$PureComponent) {
+    _inherits(SuggestItem, _React$PureComponent);
 
-  function SuggestItem() {
-    var _ref;
+    function SuggestItem(props) {
+        _classCallCheck(this, SuggestItem);
 
-    var _temp, _this, _ret;
+        var _this = _possibleConstructorReturn(this, (SuggestItem.__proto__ || Object.getPrototypeOf(SuggestItem)).call(this, props));
 
-    _classCallCheck(this, SuggestItem);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SuggestItem.__proto__ || Object.getPrototypeOf(SuggestItem)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (event) {
-      event.preventDefault();
-      _this.props.onSelect(_this.props.suggest);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(SuggestItem, [{
-    key: 'shouldComponentUpdate',
-
-    /**
-     * Whether or not the component should update
-     * @param {Object} nextProps The new properties
-     * @param {Object} nextState The new state
-     * @return {Boolean} Update or not?
-     */
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+        _this.onClick = _this.onClick.bind(_this);
+        return _this;
     }
 
     /**
-     * When the suggest item got clicked
-     * @param {Event} event The click event
-     */
-
-  }, {
-    key: 'render',
+    * When the suggest item got clicked
+    * @param {Event} event The click event
+    */
 
 
-    /**
-     * Render the view
-     * @return {Function} The React element to render
-     */
-    value: function render() {
-      var classes = (0, _classnames3.default)('geolookup__item', this.props.className, { 'geolookup__item--active': this.props.isActive }, _defineProperty({}, this.props.activeClassname, this.props.activeClassname ? this.props.isActive : null));
+    _createClass(SuggestItem, [{
+        key: 'onClick',
+        value: function onClick(event) {
+            event.preventDefault();
+            this.props.onSelect(this.props.suggest);
+        }
 
-      return _react2.default.createElement(
-        'li',
-        {
-          className: classes,
-          style: this.props.style,
-          onMouseDown: this.props.onMouseDown,
-          onMouseOut: this.props.onMouseOut,
-          onClick: this.onClick
-        },
-        this.props.suggestItemLabelRenderer(this.props.suggest)
-      );
-    }
-  }]);
+        /**
+        * Render the view
+        * @return {Function} The React element to render
+        */
 
-  return SuggestItem;
-}(_react2.default.Component);
+    }, {
+        key: 'render',
+        value: function render() {
+            var classes = (0, _classnames3.default)('geolookup__item', this.props.className, { 'geolookup__item--active': this.props.isActive }, _defineProperty({}, this.props.activeClassname, this.props.activeClassname ? this.props.isActive : null));
+
+            return _react2.default.createElement(
+                'li',
+                {
+                    className: classes,
+                    style: this.props.style,
+                    onMouseDown: this.props.onMouseDown,
+                    onMouseOut: this.props.onMouseOut,
+                    onClick: this.onClick
+                },
+                this.props.suggestItemLabelRenderer(this.props.suggest)
+            );
+        }
+    }]);
+
+    return SuggestItem;
+}(_react2.default.PureComponent);
 
 /**
- * Default values for the properties
+ * Types for the properties
  * @type {Object}
  */
 
 
 exports.default = SuggestItem;
-SuggestItem.defaultProps = {
-  isActive: false,
-  className: '',
-  suggest: {}
+SuggestItem.propTypes = {
+    isActive: _propTypes2.default.bool,
+    className: _propTypes2.default.string,
+    activeClassname: _propTypes2.default.string,
+    suggest: _propTypes2.default.object,
+    onMouseDown: _propTypes2.default.func,
+    onMouseOut: _propTypes2.default.func,
+    onSelect: _propTypes2.default.func,
+    suggestItemLabelRenderer: _propTypes2.default.func,
+    style: _propTypes2.default.object
 };
 
-},{"classnames":1,"react-addons-shallow-compare":14}],21:[function(require,module,exports){
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
+SuggestItem.defaultProps = {
+    isActive: false,
+    className: '',
+    suggest: {},
+    onMouseDown: function onMouseDown() {/* no-op */},
+    onMouseOut: function onMouseOut() {/* no-op */},
+    onSelect: function onSelect() {/* no-op */},
+    suggestItemLabelRenderer: function suggestItemLabelRenderer() {/* no-op */}
+};
+
+},{"classnames":1,"prop-types":8}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2793,10 +2934,6 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
-
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
-
 var _classnames2 = require('classnames');
 
 var _classnames3 = _interopRequireDefault(_classnames2);
@@ -2804,6 +2941,10 @@ var _classnames3 = _interopRequireDefault(_classnames2);
 var _suggestItem = require('./suggest-item');
 
 var _suggestItem2 = _interopRequireDefault(_suggestItem);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2821,103 +2962,117 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-var SuggestList = function (_React$Component) {
-  _inherits(SuggestList, _React$Component);
+var SuggestList = function (_React$PureComponent) {
+    _inherits(SuggestList, _React$PureComponent);
 
-  function SuggestList() {
-    _classCallCheck(this, SuggestList);
+    function SuggestList(props) {
+        _classCallCheck(this, SuggestList);
 
-    return _possibleConstructorReturn(this, (SuggestList.__proto__ || Object.getPrototypeOf(SuggestList)).apply(this, arguments));
-  }
+        var _this = _possibleConstructorReturn(this, (SuggestList.__proto__ || Object.getPrototypeOf(SuggestList)).call(this, props));
 
-  _createClass(SuggestList, [{
-    key: 'shouldComponentUpdate',
-
-    /**
-     * Whether or not the component should update
-     * @param {Object} nextProps The new properties
-     * @param {Object} nextState The new state
-     * @return {Boolean} Update or not?
-     */
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+        _this.isHidden = _this.isHidden.bind(_this);
+        return _this;
     }
-
     /**
-     * Whether or not it is hidden
-     * @return {Boolean} Hidden or not?
-     */
+    * Whether or not it is hidden
+    * @return {Boolean} Hidden or not?
+    */
 
-  }, {
-    key: 'isHidden',
-    value: function isHidden() {
-      return this.props.isHidden || this.props.suggests.length === 0;
-    }
 
-    /**
-     * There are new properties available for the list
-     * @param {Object} nextProps The new properties
-     */
-
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.suggests !== this.props.suggests) {
-        if (nextProps.suggests.length === 0) {
-          this.props.onSuggestNoResults();
+    _createClass(SuggestList, [{
+        key: 'isHidden',
+        value: function isHidden() {
+            return this.props.isHidden || this.props.suggests.length === 0;
         }
-      }
-    }
 
-    /**
-     * Render the view
-     * @return {Function} The React element to render
-     */
+        /**
+        * There are new properties available for the list
+        * @param {Object} nextProps The new properties
+        */
 
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            if (nextProps.suggests !== this.props.suggests) {
+                if (nextProps.suggests.length === 0) {
+                    this.props.onSuggestNoResults();
+                }
+            }
+        }
 
-      var classes = (0, _classnames3.default)('geolookup__suggests', { 'geolookup__suggests--hidden': this.isHidden() }, _defineProperty({}, this.props.hiddenClassName, this.props.hiddenClassName ? this.isHidden() : null));
+        /**
+        * Render the view
+        * @return {Function} The React element to render
+        */
 
-      return _react2.default.createElement(
-        'ul',
-        { className: classes, style: this.props.style },
-        this.props.suggests.map(function (suggest) {
-          var isActive = _this2.props.activeSuggest && suggest.placeId === _this2.props.activeSuggest.placeId;
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
 
-          return _react2.default.createElement(_suggestItem2.default, {
-            key: suggest.placeId,
-            className: suggest.className,
-            suggest: suggest,
-            style: _this2.props.suggestItemStyle,
-            isActive: isActive,
-            activeClassname: _this2.props.suggestItemActiveClassName,
-            onMouseDown: _this2.props.onSuggestMouseDown,
-            onMouseOut: _this2.props.onSuggestMouseOut,
-            onSelect: _this2.props.onSuggestSelect,
-            suggestItemLabelRenderer: _this2.props.suggestItemLabelRenderer
-          });
-        })
-      );
-    }
-  }]);
+            var classes = (0, _classnames3.default)('geolookup__suggests', { 'geolookup__suggests--hidden': this.isHidden() }, _defineProperty({}, this.props.hiddenClassName, this.props.hiddenClassName ? this.isHidden() : null));
 
-  return SuggestList;
-}(_react2.default.Component);
+            return _react2.default.createElement(
+                'ul',
+                { className: classes, style: this.props.style },
+                this.props.suggests.map(function (suggest) {
+                    var isActive = _this2.props.activeSuggest && suggest.placeId === _this2.props.activeSuggest.placeId;
+
+                    return _react2.default.createElement(_suggestItem2.default, {
+                        key: suggest.placeId,
+                        className: suggest.className,
+                        suggest: suggest,
+                        style: _this2.props.suggestItemStyle,
+                        isActive: isActive,
+                        activeClassname: _this2.props.suggestItemActiveClassName,
+                        onMouseDown: _this2.props.onSuggestMouseDown,
+                        onMouseOut: _this2.props.onSuggestMouseOut,
+                        onSelect: _this2.props.onSuggestSelect,
+                        suggestItemLabelRenderer: _this2.props.suggestItemLabelRenderer
+                    });
+                })
+            );
+        }
+    }]);
+
+    return SuggestList;
+}(_react2.default.PureComponent);
 
 /**
- * Default values for the properties
+ * Types for the properties
  * @type {Object}
  */
 
 
 exports.default = SuggestList;
-SuggestList.defaultProps = {
-  isHidden: true,
-  suggests: []
+SuggestList.propTypes = {
+    isHidden: _propTypes2.default.bool,
+    suggests: _propTypes2.default.array,
+    suggestItemStyle: _propTypes2.default.object,
+    style: _propTypes2.default.object,
+    activeSuggest: _propTypes2.default.object,
+    hiddenClassName: _propTypes2.default.string,
+    suggestItemActiveClassName: _propTypes2.default.string,
+    onSuggestNoResults: _propTypes2.default.func,
+    suggestItemLabelRenderer: _propTypes2.default.func,
+    onSuggestMouseDown: _propTypes2.default.func,
+    onSuggestMouseOut: _propTypes2.default.func,
+    onSuggestSelect: _propTypes2.default.func
 };
 
-},{"./suggest-item":20,"classnames":1,"react-addons-shallow-compare":14}]},{},[15])(15)
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
+SuggestList.defaultProps = {
+    isHidden: true,
+    suggests: [],
+    onSuggestNoResults: function onSuggestNoResults() {/* no-op */},
+    suggestItemLabelRenderer: function suggestItemLabelRenderer() {/* no-op */},
+    onSuggestMouseDown: function onSuggestMouseDown() {/* no-op */},
+    onSuggestMouseOut: function onSuggestMouseOut() {/* no-op */},
+    onSuggestSelect: function onSuggestSelect() {/* no-op */}
+};
+
+},{"./suggest-item":18,"classnames":1,"prop-types":8}]},{},[13])(13)
 });
