@@ -47,15 +47,15 @@ describe('Component: Geolookup with Google APIs', () => {
                     onGeocodeSuggest={onGeocodeSuggest}
                     style={{
                         input: {
-                            borderColor: '#000'
+                            borderColor: '#000',
                         },
                         suggests: {
-                            borderColor: '#000'
+                            borderColor: '#000',
                         },
                         suggestItem: {
                             borderColor: '#000',
-                            borderWidth: 1
-                        }
+                            borderWidth: 1,
+                        },
                     }}
                     {...props}
                 />
@@ -91,22 +91,22 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyUp',
                 keyCode: 38,
-                which: 38
+                which: 38,
             });
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Enter',
                 keyCode: 13,
-                which: 13
+                which: 13,
             });
             expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
         });
@@ -133,7 +133,7 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
         });
@@ -193,14 +193,14 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             geoLookupInput.value = 'New';
             ReactTestUtils.Simulate.change(geoLookupInput);
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Enter',
                 keyCode: 13,
-                which: 13
+                which: 13,
             });
             expect(onSuggestSelect.args[0][0].placeId).to.equal(onActivateSuggest.args[0][0].placeId); // eslint-disable-line max-len
         });
@@ -213,14 +213,14 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             geoLookupInput.value = '';
             ReactTestUtils.Simulate.change(geoLookupInput);
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Enter',
                 keyCode: 13,
-                which: 13
+                which: 13,
             });
             expect(onActivateSuggest.args.length).to.be.equal(0); // eslint-disable-line max-len
         });
@@ -237,7 +237,7 @@ describe('Component: Geolookup with Google APIs', () => {
                 ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                     key: 'keyDown',
                     keyCode: 40,
-                    which: 40
+                    which: 40,
                 });
             }
 
@@ -255,7 +255,7 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyUp',
                 keyCode: 38,
-                which: 38
+                which: 38,
             });
 
             const allItems = ReactTestUtils.scryRenderedDOMComponentsWithClass(component, 'geolookup__item'), // eslint-disable-line max-len, one-var
@@ -329,7 +329,7 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Enter',
                 keyCode: 13,
-                which: 13
+                which: 13,
             });
             expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
         });
@@ -342,7 +342,7 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Tab',
                 keyCode: 9,
-                which: 9
+                which: 9,
             });
             expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
         });
@@ -367,7 +367,7 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Tab',
                 keyCode: 9,
-                which: 9
+                which: 9,
             });
             expect(onSuggestSelect.calledOnce).to.be.false; // eslint-disable-line no-unused-expressions, max-len
         });
@@ -377,12 +377,12 @@ describe('Component: Geolookup with Google APIs', () => {
         const suggestItemLabelRenderer = sinon.spy(), fixtures = [
             {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
             {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
-            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
+            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}},
         ];
 
         beforeEach(() => render({
             suggestItemLabelRenderer: suggestItemLabelRenderer,
-            fixtures: fixtures
+            fixtures: fixtures,
         }));
 
         it('should call suggestItemLabelRendererwhen displaying options', () => {
@@ -403,7 +403,7 @@ describe('Component: Geolookup with Google APIs', () => {
         const fixtures = [
             {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
             {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
-            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
+            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}},
         ];
 
         beforeEach(() => render({fixtures}));
@@ -438,12 +438,12 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Enter',
                 keyCode: 13,
-                which: 13
+                which: 13,
             });
 
             expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
@@ -458,7 +458,7 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyUp',
                 keyCode: 38,
-                which: 38
+                which: 38,
             });
 
             expect(suggest.classList.contains('geolookup__suggests--hidden')).to.be.false; // eslint-disable-line no-unused-expressions, max-len
@@ -467,7 +467,7 @@ describe('Component: Geolookup with Google APIs', () => {
 
     describe('with autoActivateFirstSuggest enabled', () => {
         const props = {
-            autoActivateFirstSuggest: true
+            autoActivateFirstSuggest: true,
         };
 
         beforeEach(() => render(props));
@@ -520,7 +520,7 @@ describe('Component: Geolookup with Google APIs', () => {
     describe('with label and id props', () => {
         const props = {
             id: 'geolookup-id',
-            label: 'some label'
+            label: 'some label',
         };
 
         beforeEach(() => render(props));
@@ -546,7 +546,7 @@ describe('Component: Geolookup with Google APIs', () => {
         const props = {
             suggestsHiddenClassName: 'suggests-hidden-class',
             suggestItemActiveClassName: 'suggest-item-active',
-            autoActivateFirstSuggest: true
+            autoActivateFirstSuggest: true,
         };
 
         beforeEach(() => render(props));
@@ -583,19 +583,19 @@ describe('Component: Geolookup with Google APIs', () => {
         let geocodeProviderStub,
             geocodeProvider = {
                 geocode: (suggest) => suggest,
-                lookup: (userInput) => userInput
+                lookup: (userInput) => userInput,
             },
             lookupPromise = new Promise(() => [{
                 label: 'test',
                 placeId: 'test',
                 isFixture: false,
-                raw: {}
+                raw: {},
             }]),
             geocodePromise = new Promise(() => ({
                 label: 'test',
                 placeId: 'test',
                 isFixture: false,
-                raw: {}
+                raw: {},
             }));
 
         beforeEach(() => {
@@ -607,7 +607,7 @@ describe('Component: Geolookup with Google APIs', () => {
             geocodeProviderStub.geocode.returns(geocodePromise);
             render({
                 disableAutoLookup: true,
-                geocodeProvider: geocodeProviderStub
+                geocodeProvider: geocodeProviderStub,
             });
         });
 
@@ -639,12 +639,12 @@ describe('Component: Geolookup with Google APIs', () => {
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'keyDown',
                 keyCode: 40,
-                which: 40
+                which: 40,
             });
             ReactTestUtils.Simulate.keyDown(geoLookupInput, {
                 key: 'Enter',
                 keyCode: 13,
-                which: 13
+                which: 13,
             });
             expect(geocodeProviderStub.geocode.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
         });

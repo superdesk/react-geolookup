@@ -8,7 +8,7 @@ import * as Nominatim from 'nominatim-browser';
 var geocodeProvider = {
     lookup: (userInput) => Nominatim.geocode({
         q: userInput,
-        addressdetails: true
+        addressdetails: true,
     }),
 
     geocode: (suggest) => {
@@ -16,15 +16,15 @@ var geocodeProvider = {
             nominatim: suggest.raw || {},
             location: {
                 lat: suggest.raw ? suggest.raw.lat : '',
-                lon: suggest.raw ? suggest.raw.lon : ''
+                lon: suggest.raw ? suggest.raw.lon : '',
             },
             placeId: suggest.placeId,
             isFixture: suggest.isFixture,
-            label: suggest.raw ? suggest.raw.display_name : ''
+            label: suggest.raw ? suggest.raw.display_name : '',
         });
 
         return geocodePromise;
-    }
+    },
 };
 
 class App extends React.Component { // eslint-disable-line
@@ -36,7 +36,7 @@ class App extends React.Component { // eslint-disable-line
         var fixtures = [
             {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
             {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
-            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
+            {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}},
         ];
 
     return ( // eslint-disable-line

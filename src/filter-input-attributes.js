@@ -61,7 +61,7 @@ const allowedAttributes = [
     'aria-multiline',
     'aria-placeholder',
     'aria-readonly',
-    'aria-required'
+    'aria-required',
 ];
 
 /**

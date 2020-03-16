@@ -44,7 +44,7 @@ export default class SuggestList extends React.PureComponent {
             {
                 [this.props.hiddenClassName]: this.props.hiddenClassName
                     ? this.isHidden()
-                    : null
+                    : null,
             }
         );
 
@@ -91,7 +91,7 @@ SuggestList.propTypes = {
     suggestItemLabelRenderer: PropTypes.func,
     onSuggestMouseDown: PropTypes.func,
     onSuggestMouseOut: PropTypes.func,
-    onSuggestSelect: PropTypes.func
+    onSuggestSelect: PropTypes.func,
 };
 
 /**
@@ -105,5 +105,5 @@ SuggestList.defaultProps = {
     suggestItemLabelRenderer: () => { /* no-op */ },
     onSuggestMouseDown: () => { /* no-op */ },
     onSuggestMouseOut: () => { /* no-op */ },
-    onSuggestSelect: () => { /* no-op */ }
+    onSuggestSelect: () => { /* no-op */ },
 };

@@ -38,9 +38,9 @@ export default {
     style: PropTypes.shape({
         input: PropTypes.object,
         suggests: PropTypes.object,
-        suggestItem: PropTypes.object
+        suggestItem: PropTypes.object,
     }),
     ignoreTab: PropTypes.bool,
     label: PropTypes.string,
-    suggestItemLabelRenderer: PropTypes.func
+    suggestItemLabelRenderer: PropTypes.func,
 };

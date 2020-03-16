@@ -165,7 +165,7 @@ Input.defaultProps = {
     onNext: () => { /* no-op */ },
     onPrev: () => { /* no-op */ },
     onSelect: () => { /* no-op */ },
-    onEscape: () => { /* no-op */ }
+    onEscape: () => { /* no-op */ },
 };
 
 export default Input;

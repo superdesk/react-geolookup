@@ -18,9 +18,9 @@ export default function googleStub() {
                 geometry: {
                     location: {
                         lat: () => 0,
-                        lng: () => 0
-                    }
-                }
+                        lng: () => 0,
+                    },
+                },
             }], 'OK');
         },
         google = {
@@ -30,19 +30,19 @@ export default function googleStub() {
                 places: {
                     AutocompleteService() {
                         return {
-                            getPlacePredictions: predictionStub
+                            getPlacePredictions: predictionStub,
                         };
-                    }
+                    },
                 },
                 Geocoder() {
                     return {
-                        geocode: geocodeStub
+                        geocode: geocodeStub,
                     };
                 },
                 GeocoderStatus: {
-                    OK: 'OK'
-                }
-            }
+                    OK: 'OK',
+                },
+            },
         };
 
     return google;
