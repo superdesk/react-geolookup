@@ -87,8 +87,5 @@
     "autosuggest",
     "places",
     "nominatim"
-  ],
-  "volta": {
-    "node": "14.21.3"
-  }
+  ]
 }
